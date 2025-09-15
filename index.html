@@ -6,12 +6,18 @@
         <title>For My Baby · Shin Myat Tun ❤ Ei Myat Thin Za</title>
         <meta name="description" content="A cute, lovely, and organized site made with love." />
         <meta property="og:title" content="For My Baby" />
-        <meta property="og:description" content="A cute, lovely, and organized site made with love." />
+        <meta
+            property="og:description"
+            content="A cute, lovely, and organized site made with love."
+        />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="For My Baby" />
-        <meta name="twitter:description" content="A cute, lovely, and organized site made with love." />
+        <meta
+            name="twitter:description"
+            content="A cute, lovely, and organized site made with love."
+        />
         <meta name="twitter:image" content="og-image.svg" />
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,8 +27,10 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="styles.css" />
+        <link rel="manifest" href="site.webmanifest" />
     </head>
     <body>
+        <div id="progress" style="position:fixed;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#ffb3d1,#e6b3ff);transform-origin:left;transform:scaleX(0);z-index:1000"></div>
         <header class="site-header">
             <div class="container row between center">
                 <a class="brand" href="#hero">For My Baby</a>
@@ -32,6 +40,7 @@
                     <a href="#reasons">Reasons</a>
                     <a href="#gallery">Gallery</a>
                 </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙 Night</button>
             </div>
         </header>
 
@@ -44,6 +53,10 @@
                     <span class="chip">💖 Love</span>
                     <span class="chip">✨ Sparkle</span>
                     <span class="chip">💕 Forever</span>
+                </div>
+                <div class="avatars">
+                    <img src="https://i.pravatar.cc/120?img=5" alt="Shin Myat Tun" class="avatar" />
+                    <img src="https://i.pravatar.cc/120?img=47" alt="Ei Myat Thin Za" class="avatar" />
                 </div>
             </section>
 
@@ -148,6 +161,22 @@
                     milestoneEl.textContent = years + (years === 1 ? " year" : " years");
             })();
 
+            // Theme switch (light/dark)
+            (function(){
+                const btn = document.getElementById('themeToggle');
+                const root = document.documentElement;
+                function set(mode){
+                    if(mode==='dark'){ root.classList.add('dark'); btn.textContent='☀️ Day'; }
+                    else { root.classList.remove('dark'); btn.textContent='🌙 Night'; }
+                    localStorage.setItem('theme', mode);
+                }
+                const saved=localStorage.getItem('theme');
+                set(saved==='dark'?'dark':'light');
+                btn.addEventListener('click',()=>{
+                    set(root.classList.contains('dark')?'light':'dark');
+                });
+            })();
+
             // Simple lightbox for gallery
             (function () {
                 const lb = document.getElementById("lightbox");
@@ -157,21 +186,55 @@
                 const gallery = document.querySelector("#gallery .grid.gallery");
                 if (!lb || !img || !gallery) return;
                 function open(src, alt) {
-                    img.src = src; img.alt = alt || ""; cap.textContent = alt || "";
-                    lb.setAttribute("aria-hidden","false"); lb.classList.add("open");
+                    img.src = src;
+                    img.alt = alt || "";
+                    cap.textContent = alt || "";
+                    lb.setAttribute("aria-hidden", "false");
+                    lb.classList.add("open");
                     document.body.style.overflow = "hidden";
                 }
                 function close() {
-                    lb.classList.remove("open"); lb.setAttribute("aria-hidden","true");
-                    img.src = ""; cap.textContent = ""; document.body.style.overflow = "";
+                    lb.classList.remove("open");
+                    lb.setAttribute("aria-hidden", "true");
+                    img.src = "";
+                    cap.textContent = "";
+                    document.body.style.overflow = "";
                 }
                 gallery.addEventListener("click", (e) => {
-                    const t = e.target; if (t && t.tagName === "IMG") open(t.src, t.alt);
+                    const t = e.target;
+                    if (t && t.tagName === "IMG") open(t.src, t.alt);
                 });
                 closeBtn?.addEventListener("click", close);
-                lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
-                window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+                lb.addEventListener("click", (e) => {
+                    if (e.target === lb) close();
+                });
+                window.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") close();
+                });
             })();
+
+            // Scroll progress bar
+            (function(){
+                const bar=document.getElementById('progress');
+                if(!bar) return;
+                function update(){
+                    const h=document.documentElement;
+                    const scrolled=h.scrollTop;
+                    const max=h.scrollHeight-h.clientHeight;
+                    const p=max?scrolled/max:0;
+                    bar.style.transform=`scaleX(${p})`;
+                }
+                window.addEventListener('scroll',update,{passive:true});
+                window.addEventListener('resize',update);
+                update();
+            })();
+
+            // Register service worker (PWA)
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+                });
+            }
         </script>
     </body>
 </html>
