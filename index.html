@@ -61,7 +61,7 @@
 
         <main class="container site-grid">
             <!-- HERO -->
-            <section id="hero" class="section hero card span-2">
+            <section id="hero" class="section hero card span-2 reveal">
                 <h1 class="title-script">Shin Myat Tun ❤ Ei Myat Thin Za</h1>
                 <p class="lead">Together is my favorite place to be.</p>
                 <div class="chips">
@@ -76,7 +76,7 @@
             </section>
 
             <!-- ABOUT US -->
-            <section id="about" class="section card">
+            <section id="about" class="section card reveal">
                 <h2 class="section-title">🌸 About us</h2>
                 <p class="prose">
                     We’re two hearts sharing one story. This little corner of the web is a scrapbook
@@ -86,7 +86,7 @@
             </section>
 
             <!-- ANNIVERSARY -->
-            <section id="anniversary" class="section card">
+            <section id="anniversary" class="section card reveal">
                 <h2 class="section-title">📅 Anniversary</h2>
                 <div class="stat">
                     <div class="stat-number" id="daysTogether">0</div>
@@ -104,7 +104,7 @@
             </section>
 
             <!-- REASONS -->
-            <section id="reasons" class="section card">
+            <section id="reasons" class="section card reveal">
                 <h2 class="section-title">💗 Reasons I Love You</h2>
                 <ul class="reasons">
                     <li>You're my safe place and my adventure.</li>
@@ -116,7 +116,7 @@
             </section>
 
             <!-- GALLERY -->
-            <section id="gallery" class="section card span-2">
+            <section id="gallery" class="section card span-2 reveal">
                 <h2 class="section-title">📸 Our Memories</h2>
                 <div class="grid gallery">
                     <img src="https://picsum.photos/seed/love1/800/540" alt="Memory 1" />
@@ -255,6 +255,16 @@
                     navigator.serviceWorker.register("./sw.js").catch(() => {});
                 });
             }
+
+            // Scroll reveal logic
+            (function(){
+                const els=[...document.querySelectorAll('.reveal')];
+                if(!('IntersectionObserver' in window)){ els.forEach(e=>e.classList.add('in')); return; }
+                const ob=new IntersectionObserver((entries)=>{
+                    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); ob.unobserve(en.target);} });
+                },{threshold:.15});
+                els.forEach(e=>ob.observe(e));
+            })();
         </script>
     </body>
 </html>
