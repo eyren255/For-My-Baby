@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eyren255.github.io/For-My-Baby/sitemap.xml
+
