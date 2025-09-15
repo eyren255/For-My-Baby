@@ -49,6 +49,36 @@
                 font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             }
 
+            /* Cute top navigation */
+            .cute-nav {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                backdrop-filter: blur(6px);
+                background: rgba(255, 240, 245, 0.7);
+                border: 1px solid var(--border-subtle);
+                border-radius: 16px;
+                margin: 10px auto 20px auto;
+                max-width: 1200px;
+                padding: 10px 16px;
+                box-shadow: 0 6px 18px var(--shadow-gentle);
+            }
+            .cute-nav .nav-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .cute-nav .nav-links {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .cute-nav a {
+                text-decoration: none;
+            }
+
             .container {
                 max-width: 1200px;
                 margin: 0 auto;
@@ -151,10 +181,65 @@
                 overflow: hidden;
                 z-index: 500;
             }
+
+            /* Surprise modal */
+            .modal-backdrop {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.25);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 1200;
+            }
+            .modal {
+                background: var(--neutral-white);
+                border: 1px solid var(--border-subtle);
+                border-radius: 20px;
+                padding: 24px;
+                max-width: 560px;
+                margin: 16px;
+                box-shadow: 0 12px 36px var(--shadow-soft);
+                text-align: center;
+            }
+            .modal .close-row {
+                display: flex;
+                justify-content: flex-end;
+            }
+            .modal .close-btn {
+                background: var(--accent-cream);
+                border: 1px solid var(--border-light);
+                border-radius: 12px;
+                padding: 6px 10px;
+                cursor: pointer;
+            }
+            .days-counter {
+                color: var(--text-accent);
+                font-weight: 700;
+            }
         </style>
     </head>
     <body>
         <div class="hearts-container" aria-hidden="true"></div>
+        <nav class="cute-nav" aria-label="Primary">
+            <div class="nav-row">
+                <div class="lovely-subtitle" style="margin: 0">
+                    💞 For My Baby — Days together:
+                    <span id="daysTogether" class="days-counter">0</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#palette" class="cute-button" style="padding: 6px 14px">Palette</a>
+                    <a href="#interactive" class="cute-button" style="padding: 6px 14px">
+                        Interactive
+                    </a>
+                    <a href="#cards" class="cute-button" style="padding: 6px 14px">Cards</a>
+                    <a href="#special" class="cute-button" style="padding: 6px 14px">Special</a>
+                    <button id="openSurprise" class="cute-button" style="padding: 6px 14px">
+                        Surprise 💌
+                    </button>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <!-- Header -->
             <div class="header">
@@ -171,7 +256,7 @@
             </div>
 
             <!-- Color Palette Showcase -->
-            <div class="demo-section">
+            <div id="palette" class="demo-section">
                 <h2 class="lovely-subtitle">🎨 Color Palette</h2>
                 <div class="color-palette">
                     <div class="color-card">
@@ -211,7 +296,7 @@
             </div>
 
             <!-- Interactive Elements Demo -->
-            <div class="demo-section">
+            <div id="interactive" class="demo-section">
                 <h2 class="lovely-subtitle">🎯 Interactive Elements</h2>
 
                 <div class="button-group">
@@ -235,7 +320,7 @@ You make my heart skip a beat every day! 💕</textarea
             </div>
 
             <!-- Card Examples -->
-            <div class="demo-section">
+            <div id="cards" class="demo-section">
                 <h2 class="lovely-subtitle">💌 Lovely Cards</h2>
                 <div
                     style="
@@ -278,7 +363,7 @@ You make my heart skip a beat every day! 💕</textarea
             </div>
 
             <!-- Special Effects -->
-            <div class="special-effects">
+            <div id="special" class="special-effects">
                 <h2 class="lovely-subtitle">✨ Special Effects</h2>
                 <p class="sweet-text rainbow-text" style="font-size: 1.2em; font-weight: bold">
                     This text has a rainbow effect! 🌈
@@ -314,6 +399,31 @@ You make my heart skip a beat every day! 💕</textarea
             </div>
         </div>
         <button id="backToTop" class="cute-button" title="Back to top">⬆️ Top</button>
+
+        <!-- Surprise Modal -->
+        <div
+            id="surpriseBackdrop"
+            class="modal-backdrop"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
+            <div class="modal">
+                <div class="close-row">
+                    <button id="closeSurprise" class="close-btn">✖</button>
+                </div>
+                <h2 class="cute-title" style="margin-top: 0">For You 💖</h2>
+                <p class="sweet-text">
+                    Every second with you is precious. Thank you for being my favorite person.
+                    You're the sparkle in my day and the calm in my night. I love you endlessly. 💕
+                </p>
+                <div class="icon-showcase" style="font-size: 2em; margin-top: 10px">
+                    <span class="heart">💖</span>
+                    <span class="sparkle">✨</span>
+                    <span class="heart">💕</span>
+                </div>
+            </div>
+        </div>
 
         <script>
             // Back to top behavior
@@ -362,6 +472,43 @@ You make my heart skip a beat every day! 💕</textarea
                 window.addEventListener("pointerdown", spawnHeart);
                 // Optional: stop after some time if needed
                 // setTimeout(() => clearInterval(interval), 60000);
+            })();
+
+            // Days together counter - set your start date here (YYYY-MM-DD)
+            (function () {
+                const startDateStr = "2024-02-14"; // CHANGE this to your special date
+                const start = new Date(startDateStr + "T00:00:00");
+                const el = document.getElementById("daysTogether");
+                if (!isNaN(start.getTime()) && el) {
+                    const update = () => {
+                        const today = new Date();
+                        const diffMs = today.setHours(0, 0, 0, 0) - start.setHours(0, 0, 0, 0);
+                        const days = Math.max(0, Math.floor(diffMs / 86400000));
+                        el.textContent = String(days);
+                    };
+                    update();
+                }
+            })();
+
+            // Surprise modal
+            (function () {
+                const openBtn = document.getElementById("openSurprise");
+                const closeBtn = document.getElementById("closeSurprise");
+                const backdrop = document.getElementById("surpriseBackdrop");
+                function open() {
+                    backdrop.style.display = "flex";
+                }
+                function close() {
+                    backdrop.style.display = "none";
+                }
+                if (openBtn) openBtn.addEventListener("click", open);
+                if (closeBtn) closeBtn.addEventListener("click", close);
+                backdrop?.addEventListener("click", (e) => {
+                    if (e.target === backdrop) close();
+                });
+                window.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") close();
+                });
             })();
         </script>
     </body>
