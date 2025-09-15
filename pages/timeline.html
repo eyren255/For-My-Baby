@@ -111,16 +111,20 @@
             const db = firebase.firestore();
             const auth = firebase.auth();
 
+            // optional shared code for cross-device sync
+            const ROOM_KEY = 'shareRoom';
+            function getRoom(){ return (localStorage.getItem(ROOM_KEY)||'').trim(); }
             auth.signInAnonymously().then(() => {
                 const uid = auth.currentUser.uid;
-                // Subscribe real-time
-                db.collection("timeline")
-                    .where("user", "==", uid)
-                    .onSnapshot((snap) => {
-                        const list = [];
-                        snap.forEach((doc) => list.push(doc.data()));
-                        renderFrom(list);
-                    });
+                const room = getRoom();
+                // Subscribe real-time (room if set, else user)
+                let q = db.collection('timeline');
+                q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                q.onSnapshot((snap) => {
+                    const list = [];
+                    snap.forEach((doc) => list.push(doc.data()));
+                    renderFrom(list);
+                });
 
                 // Add memory
                 document.getElementById("add").addEventListener("click", async () => {
@@ -132,6 +136,7 @@
                     if (!text) return;
                     await db.collection("timeline").add({
                         user: uid,
+                        room: getRoom() || null,
                         date,
                         emoji,
                         text,
@@ -143,7 +148,10 @@
                 // Clear all
                 document.getElementById("clear").addEventListener("click", async () => {
                     if (!confirm("Clear all memories?")) return;
-                    const snap = await db.collection("timeline").where("user", "==", uid).get();
+                    const room = getRoom();
+                    let q = db.collection('timeline');
+                    q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                    const snap = await q.get();
                     const batch = db.batch();
                     snap.forEach((doc) => batch.delete(doc.ref));
                     await batch.commit();
