@@ -7,7 +7,10 @@
         <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
     </head>
@@ -26,26 +29,41 @@
         <main class="container site-grid">
             <section class="section card span-2">
                 <h1 class="section-title">💌 Lovely Cards</h1>
-                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div
+                    class="grid"
+                    style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px"
+                >
                     <div class="lovely-card section">
-                        <h3 class="title-script" style="margin:0 0 10px 0;">Sweet Message</h3>
-                        <p class="prose">Every day with you is a beautiful adventure filled with love, laughter, and countless precious moments. You make everything better just by being you! 💕</p>
+                        <h3 class="title-script" style="margin: 0 0 10px 0">Sweet Message</h3>
+                        <p class="prose">
+                            Every day with you is a beautiful adventure filled with love, laughter,
+                            and countless precious moments. You make everything better just by being
+                            you! 💕
+                        </p>
                     </div>
                     <div class="lovely-card section">
-                        <h3 class="title-script" style="margin:0 0 10px 0;">Romantic Quote</h3>
-                        <p class="prose">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine." — Maya Angelou</p>
+                        <h3 class="title-script" style="margin: 0 0 10px 0">Romantic Quote</h3>
+                        <p class="prose">
+                            "In all the world, there is no heart for me like yours. In all the
+                            world, there is no love for you like mine." — Maya Angelou
+                        </p>
                     </div>
                 </div>
             </section>
         </main>
         <footer class="site-footer">
-            <div class="container center muted">Made with 💕 · © <span id="year"></span></div>
+            <div class="container center muted">
+                Made with 💕 · ©
+                <span id="year"></span>
+            </div>
         </footer>
         <script>
-            document.getElementById('year').textContent = new Date().getFullYear();
-            if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('../sw.js').catch(()=>{}); }); }
+            document.getElementById("year").textContent = new Date().getFullYear();
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("../sw.js").catch(() => {});
+                });
+            }
         </script>
     </body>
-    </html>
-
-
+</html>

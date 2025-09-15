@@ -7,7 +7,10 @@
         <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
     </head>
@@ -30,14 +33,25 @@
                     <div class="stat-number" id="daysTogether">0</div>
                     <div class="stat-label">Days together</div>
                 </div>
-                <p class="muted">Next anniversary in <strong><span id="daysToAnniv">0</span> days</strong> · <span id="nextMilestone">1 year</span></p>
+                <p class="muted">
+                    Next anniversary in
+                    <strong>
+                        <span id="daysToAnniv">0</span>
+                        days
+                    </strong>
+                    ·
+                    <span id="nextMilestone">1 year</span>
+                </p>
             </section>
         </main>
         <footer class="site-footer">
-            <div class="container center muted">Made with 💕 · © <span id="year"></span></div>
+            <div class="container center muted">
+                Made with 💕 · ©
+                <span id="year"></span>
+            </div>
         </footer>
         <script>
-            document.getElementById('year').textContent = new Date().getFullYear();
+            document.getElementById("year").textContent = new Date().getFullYear();
             (function () {
                 const startDateStr = "2025-09-13";
                 const start = new Date(startDateStr + "T00:00:00");
@@ -53,15 +67,21 @@
                 const m = (start.getMonth() + 1).toString().padStart(2, "0");
                 const d = start.getDate().toString().padStart(2, "0");
                 const thisAnniv = new Date(`${year}-${m}-${d}T00:00:00`);
-                const nextAnniv = thisAnniv >= new Date(today.toDateString()) ? thisAnniv : new Date(`${year + 1}-${m}-${d}T00:00:00`);
+                const nextAnniv =
+                    thisAnniv >= new Date(today.toDateString())
+                        ? thisAnniv
+                        : new Date(`${year + 1}-${m}-${d}T00:00:00`);
                 const daysTo = Math.ceil((nextAnniv - new Date()) / 86400000);
                 if (annivEl) annivEl.textContent = String(Math.max(0, daysTo));
                 const years = nextAnniv.getFullYear() - start.getFullYear();
-                if (milestoneEl) milestoneEl.textContent = years + (years === 1 ? ' year' : ' years');
+                if (milestoneEl)
+                    milestoneEl.textContent = years + (years === 1 ? " year" : " years");
             })();
-            if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('../sw.js').catch(()=>{}); }); }
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("../sw.js").catch(() => {});
+                });
+            }
         </script>
     </body>
-    </html>
-
-
+</html>

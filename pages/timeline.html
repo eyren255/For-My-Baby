@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline · For My Baby</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <style>
+      .editor{display:grid;gap:10px;margin-bottom:12px}
+      .timeline{display:grid;gap:12px}
+      .item{border:1px solid var(--border);border-radius:14px;padding:12px;background:#fff}
+      .when{font-weight:700;color:#d63384}
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container row between center">
+        <a class="brand" href="../index.html">For My Baby</a>
+        <nav class="nav">
+          <a href="./quiz.html">Love Quiz</a>
+          <a href="./timeline.html" aria-current="page">Timeline</a>
+          <a href="./polaroid.html">Polaroid Wall</a>
+          <a href="./tictactoe.html">Tic‑tac‑toe</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container site-grid">
+      <section class="section card span-2">
+        <h1 class="section-title">🗓️ Memory Timeline</h1>
+        <div class="editor">
+          <input id="date" class="chip" type="date" aria-label="Date" />
+          <input id="emoji" class="chip" placeholder="Emoji (e.g. 💖)" aria-label="Emoji" />
+          <input id="text" class="chip" placeholder="Write a sweet memory..." aria-label="Memory text" />
+          <div>
+            <button id="add" class="chip">Add</button>
+            <button id="clear" class="chip">Clear all</button>
+          </div>
+        </div>
+        <div id="timeline" class="timeline"></div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="container center muted">Made with 💕 · © <span id="year"></span></div></footer>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      const KEY='memTimeline';
+      const list=JSON.parse(localStorage.getItem(KEY)||'[]');
+      const tl=document.getElementById('timeline');
+      function render(){
+        tl.innerHTML='';
+        list.sort((a,b)=>a.date.localeCompare(b.date));
+        list.forEach((it,idx)=>{
+          const d=document.createElement('div');d.className='item';
+          d.innerHTML=`<div class="when">${it.emoji||'💖'} ${it.date}</div><div class="prose">${it.text}</div>`;
+          d.addEventListener('dblclick',()=>{ list.splice(idx,1); save(); });
+          tl.appendChild(d);
+        });
+      }
+      function save(){ localStorage.setItem(KEY, JSON.stringify(list)); render(); }
+      document.getElementById('add').addEventListener('click',()=>{
+        const date=document.getElementById('date').value||new Date().toISOString().slice(0,10);
+        const emoji=document.getElementById('emoji').value.trim();
+        const text=document.getElementById('text').value.trim();
+        if(!text) return;
+        list.push({date,emoji,text});
+        document.getElementById('text').value='';
+        save();
+      });
+      document.getElementById('clear').addEventListener('click',()=>{ if(confirm('Clear all memories?')){ list.length=0; save(); }});
+      render();
+      if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('../sw.js').catch(()=>{}); }); }
+    </script>
+  </body>
+  </html>
+
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Love Quiz · For My Baby</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <style>
+      .quiz{display:grid;gap:14px}
+      .q{padding:16px;border:1px solid var(--border);border-radius:14px;background:#fff0f5}
+      .q h3{margin:0 0 8px}
+      .actions{display:flex;gap:8px;margin-top:10px}
+      .btn{padding:8px 12px;border:1px solid var(--border);border-radius:12px;background:#fff;cursor:pointer}
+      .score{font-weight:700;color:#d63384}
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container row between center">
+        <a class="brand" href="../index.html">For My Baby</a>
+        <nav class="nav">
+          <a href="./quiz.html" aria-current="page">Love Quiz</a>
+          <a href="./timeline.html">Timeline</a>
+          <a href="./polaroid.html">Polaroid Wall</a>
+          <a href="./tictactoe.html">Tic‑tac‑toe</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container site-grid">
+      <section class="section card span-2">
+        <h1 class="section-title">💞 Love Quiz</h1>
+        <p class="muted">Answer together! Your best score is saved on this device.</p>
+        <div class="quiz" id="quiz"></div>
+        <div class="actions">
+          <button id="submit" class="btn">Submit ✨</button>
+          <button id="reset" class="btn">Reset ↺</button>
+        </div>
+        <p>Score: <span id="score" class="score">0</span> · Best: <span id="best" class="score">0</span></p>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="container center muted">Made with 💕 · © <span id="year"></span></div></footer>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      const QUESTIONS=[
+        {t:'Our ideal date?',o:['Movie night','Stargazing','Cooking together','Beach walk'],a:1},
+        {t:'Favorite treat?',o:['Chocolate','Ice cream','Cake','Bubble tea'],a:3},
+        {t:'Song for us?',o:['Perfect','All of Me','Yellow','Love Story'],a:0},
+        {t:'Dream trip?',o:['Paris','Kyoto','Bali','Santorini'],a:2},
+        {t:'Morning text vibe?',o:['Good morning ❤️','Miss you','Coffee?','Let’s cuddle'],a:0}
+      ];
+      const quiz=document.getElementById('quiz');
+      QUESTIONS.forEach((q,qi)=>{
+        const wrap=document.createElement('div');wrap.className='q';
+        wrap.innerHTML=`<h3>${qi+1}. ${q.t}</h3>`+q.o.map((opt,oi)=>`<label style="display:block;margin:6px 0;"><input type="radio" name="q${qi}" value="${oi}" /> ${opt}</label>`).join('');
+        quiz.appendChild(wrap);
+      });
+      const submit=document.getElementById('submit');
+      const reset=document.getElementById('reset');
+      const scoreEl=document.getElementById('score');
+      const bestEl=document.getElementById('best');
+      bestEl.textContent=localStorage.getItem('loveQuizBest')||'0';
+      submit.addEventListener('click',()=>{
+        let s=0;QUESTIONS.forEach((q,qi)=>{const checked=document.querySelector(`input[name="q${qi}"]:checked`); if(checked&&Number(checked.value)===q.a) s++;});
+        scoreEl.textContent=String(s);
+        const best=Math.max(s, Number(localStorage.getItem('loveQuizBest')||0));
+        localStorage.setItem('loveQuizBest', String(best));
+        bestEl.textContent=String(best);
+      });
+      reset.addEventListener('click',()=>{document.querySelectorAll('#quiz input[type="radio"]').forEach(i=>i.checked=false);scoreEl.textContent='0';});
+      if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('../sw.js').catch(()=>{}); }); }
+    </script>
+  </body>
+  </html>
+
+
