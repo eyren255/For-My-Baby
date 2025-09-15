@@ -112,14 +112,16 @@
             const auth = firebase.auth();
 
             // optional shared code for cross-device sync
-            const ROOM_KEY = 'shareRoom';
-            function getRoom(){ return (localStorage.getItem(ROOM_KEY)||'').trim(); }
+            const ROOM_KEY = "shareRoom";
+            function getRoom() {
+                return (localStorage.getItem(ROOM_KEY) || "").trim();
+            }
             auth.signInAnonymously().then(() => {
                 const uid = auth.currentUser.uid;
                 const room = getRoom();
                 // Subscribe real-time (room if set, else user)
-                let q = db.collection('timeline');
-                q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                let q = db.collection("timeline");
+                q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
                 q.onSnapshot((snap) => {
                     const list = [];
                     snap.forEach((doc) => list.push(doc.data()));
@@ -149,8 +151,8 @@
                 document.getElementById("clear").addEventListener("click", async () => {
                     if (!confirm("Clear all memories?")) return;
                     const room = getRoom();
-                    let q = db.collection('timeline');
-                    q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                    let q = db.collection("timeline");
+                    q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
                     const snap = await q.get();
                     const batch = db.batch();
                     snap.forEach((doc) => batch.delete(doc.ref));

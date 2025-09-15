@@ -188,11 +188,13 @@
                 });
                 const end = () => {
                     if (pointerId != null) {
-                        try { el.releasePointerCapture(pointerId); } catch (_) {}
+                        try {
+                            el.releasePointerCapture(pointerId);
+                        } catch (_) {}
                     }
                     const fx = lastX != null ? lastX : ox;
                     const fy = lastY != null ? lastY : oy;
-                    if (typeof onmove === 'function') onmove(fx, fy);
+                    if (typeof onmove === "function") onmove(fx, fy);
                     sx = sy = lastX = lastY = pointerId = null;
                     el.style.cursor = "grab";
                 };

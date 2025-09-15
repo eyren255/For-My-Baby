@@ -13,6 +13,9 @@
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
         <style>
             .quiz {
                 display: grid;
@@ -82,6 +85,19 @@
         </footer>
         <script>
             document.getElementById("year").textContent = new Date().getFullYear();
+            // Firebase init for best score sync
+            const firebaseConfig = {
+                apiKey: "AIzaSyBVVu_oIEsys6ZGluNw13tGfGiwNLhIiuA",
+                authDomain: "baby-a2b63.firebaseapp.com",
+                projectId: "baby-a2b63",
+                storageBucket: "baby-a2b63.appspot.com",
+                messagingSenderId: "177238221787",
+                appId: "1:177238221787:web:b3e01b5de50f1da7347dfe",
+                measurementId: "G-TJ3DMJVFG9"
+            };
+            try { firebase.initializeApp(firebaseConfig); } catch (e) {}
+            const db = firebase.firestore();
+            const auth = firebase.auth();
             const QUESTIONS = [
                 {
                     t: "Our ideal date?",
@@ -115,17 +131,33 @@
             const reset = document.getElementById("reset");
             const scoreEl = document.getElementById("score");
             const bestEl = document.getElementById("best");
-            bestEl.textContent = localStorage.getItem("loveQuizBest") || "0";
-            submit.addEventListener("click", () => {
-                let s = 0;
-                QUESTIONS.forEach((q, qi) => {
-                    const checked = document.querySelector(`input[name="q${qi}"]:checked`);
-                    if (checked && Number(checked.value) === q.a) s++;
+
+            auth.signInAnonymously().then(async () => {
+                const uid = auth.currentUser.uid;
+                try {
+                    const doc = await db.collection('quizBest').doc(uid).get();
+                    if (doc.exists && typeof doc.data().best === 'number') {
+                        bestEl.textContent = String(doc.data().best);
+                    } else {
+                        bestEl.textContent = localStorage.getItem('loveQuizBest') || '0';
+                    }
+                } catch {
+                    bestEl.textContent = localStorage.getItem('loveQuizBest') || '0';
+                }
+
+                submit.addEventListener("click", async () => {
+                    let s = 0;
+                    QUESTIONS.forEach((q, qi) => {
+                        const checked = document.querySelector(`input[name="q${qi}"]:checked`);
+                        if (checked && Number(checked.value) === q.a) s++;
+                    });
+                    scoreEl.textContent = String(s);
+                    const currentBest = Number(bestEl.textContent || '0');
+                    const best = Math.max(s, currentBest);
+                    bestEl.textContent = String(best);
+                    localStorage.setItem("loveQuizBest", String(best));
+                    try { await db.collection('quizBest').doc(uid).set({ best }, { merge: true }); } catch {}
                 });
-                scoreEl.textContent = String(s);
-                const best = Math.max(s, Number(localStorage.getItem("loveQuizBest") || 0));
-                localStorage.setItem("loveQuizBest", String(best));
-                bestEl.textContent = String(best);
             });
             reset.addEventListener("click", () => {
                 document

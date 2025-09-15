@@ -257,13 +257,24 @@
             }
 
             // Scroll reveal logic
-            (function(){
-                const els=[...document.querySelectorAll('.reveal')];
-                if(!('IntersectionObserver' in window)){ els.forEach(e=>e.classList.add('in')); return; }
-                const ob=new IntersectionObserver((entries)=>{
-                    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); ob.unobserve(en.target);} });
-                },{threshold:.15});
-                els.forEach(e=>ob.observe(e));
+            (function () {
+                const els = [...document.querySelectorAll(".reveal")];
+                if (!("IntersectionObserver" in window)) {
+                    els.forEach((e) => e.classList.add("in"));
+                    return;
+                }
+                const ob = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((en) => {
+                            if (en.isIntersecting) {
+                                en.target.classList.add("in");
+                                ob.unobserve(en.target);
+                            }
+                        });
+                    },
+                    { threshold: 0.15 }
+                );
+                els.forEach((e) => ob.observe(e));
             })();
         </script>
     </body>

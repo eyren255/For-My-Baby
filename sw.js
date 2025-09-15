@@ -1,13 +1,7 @@
 const CACHE_NAME = "baby-v1";
 self.addEventListener("install", (e) => {
     e.waitUntil(
-        caches.open(CACHE_NAME).then((c) =>
-            c.addAll([
-                "index.html",
-                "styles.css",
-                "favicon.svg"
-            ])
-        )
+        caches.open(CACHE_NAME).then((c) => c.addAll(["index.html", "styles.css", "favicon.svg"]))
     );
 });
 self.addEventListener("activate", (e) => {
