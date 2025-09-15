@@ -116,7 +116,6 @@
                 // Subscribe real-time
                 db.collection("timeline")
                     .where("user", "==", uid)
-                    .orderBy("date")
                     .onSnapshot((snap) => {
                         const list = [];
                         snap.forEach((doc) => list.push(doc.data()));
