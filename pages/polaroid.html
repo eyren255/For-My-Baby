@@ -68,6 +68,11 @@
         <main class="container site-grid">
             <section class="section card span-2">
                 <h1 class="section-title">📷 Polaroid Wall</h1>
+                <div class="controls" style="display:flex;gap:8px;align-items:center;margin:8px 0 10px 0;">
+                    <input id="room" class="chip" placeholder="Shared code (optional)" aria-label="Shared code" />
+                    <button id="setRoom" class="chip">Set code</button>
+                    <span class="muted" style="font-size:12px;">Use the same code on other devices to sync.</span>
+                </div>
                 <div class="controls">
                     <input id="file" type="file" accept="image/*" />
                     <input id="cap" class="chip" placeholder="Caption" />
@@ -101,6 +106,16 @@
             const db = firebase.firestore();
             const auth = firebase.auth();
 
+            // Shared code helpers
+            const ROOM_KEY = 'shareRoom';
+            function getRoom(){ return (localStorage.getItem(ROOM_KEY)||'').trim(); }
+            function setRoom(v){ localStorage.setItem(ROOM_KEY, (v||'').trim()); }
+            document.getElementById('setRoom').addEventListener('click',()=>{
+                setRoom(document.getElementById('room').value);
+                location.reload();
+            });
+            document.getElementById('room').value = getRoom();
+
             function renderDocs(snap) {
                 board.innerHTML = "";
                 snap.forEach((doc) => {
@@ -108,13 +123,25 @@
                     const id = doc.id;
                     const d = document.createElement("div");
                     d.className = "pol";
-                    d.style.left = ((p.x || 10)) + "px";
-                    d.style.top = ((p.y || 10)) + "px";
+                    d.style.left = (p.x || 10) + "px";
+                    d.style.top = (p.y || 10) + "px";
                     d.style.transform = `rotate(${p.r || 0}deg)`;
-                    d.innerHTML = `<img src="${p.src}" alt="photo"/><div class='cap'>${p.cap || ""}</div>`;
+                    d.innerHTML = `<img src="${p.src}" alt="photo"/><div class='cap'>${
+                        p.cap || ""
+                    }</div>`;
                     board.appendChild(d);
-                    drag(d, (x, y) => { db.collection("polaroids").doc(id).update({ x, y }).catch(()=>{}); });
-                    d.addEventListener("dblclick", () => { db.collection("polaroids").doc(id).delete().catch(()=>{}); });
+                    drag(d, (x, y) => {
+                        db.collection("polaroids")
+                            .doc(id)
+                            .update({ x, y })
+                            .catch(() => {});
+                    });
+                    d.addEventListener("dblclick", () => {
+                        db.collection("polaroids")
+                            .doc(id)
+                            .delete()
+                            .catch(() => {});
+                    });
                 });
             }
             function drag(el, onmove) {
@@ -147,8 +174,11 @@
             }
             auth.signInAnonymously().then(() => {
                 const uid = auth.currentUser.uid;
+                const room = getRoom();
                 // realtime
-                db.collection("polaroids").where("user", "==", uid).onSnapshot(renderDocs);
+                let q = db.collection('polaroids');
+                q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                q.onSnapshot(renderDocs);
 
                 // add
                 document.getElementById("add").addEventListener("click", () => {
@@ -158,6 +188,7 @@
                     reader.onload = () => {
                         db.collection("polaroids").add({
                             user: uid,
+                            room: getRoom() || null,
                             src: reader.result,
                             cap: document.getElementById("cap").value,
                             x: 10,
@@ -172,7 +203,10 @@
                 // clear
                 document.getElementById("clear").addEventListener("click", async () => {
                     if (!confirm("Clear all photos?")) return;
-                    const snap = await db.collection("polaroids").where("user", "==", uid).get();
+                    const room = getRoom();
+                    let q = db.collection('polaroids');
+                    q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                    const snap = await q.get();
                     const batch = db.batch();
                     snap.forEach((doc) => batch.delete(doc.ref));
                     await batch.commit();
