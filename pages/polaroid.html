@@ -30,10 +30,12 @@
                 width: 160px;
                 user-select: none;
                 cursor: grab;
+                touch-action: none;
                 background: #fff;
                 padding: 8px 8px 14px;
                 border-radius: 8px;
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                will-change: left, top;
             }
             .pol img {
                 width: 100%;
@@ -68,10 +70,20 @@
         <main class="container site-grid">
             <section class="section card span-2">
                 <h1 class="section-title">📷 Polaroid Wall</h1>
-                <div class="controls" style="display:flex;gap:8px;align-items:center;margin:8px 0 10px 0;">
-                    <input id="room" class="chip" placeholder="Shared code (optional)" aria-label="Shared code" />
+                <div
+                    class="controls"
+                    style="display: flex; gap: 8px; align-items: center; margin: 8px 0 10px 0"
+                >
+                    <input
+                        id="room"
+                        class="chip"
+                        placeholder="Shared code (optional)"
+                        aria-label="Shared code"
+                    />
                     <button id="setRoom" class="chip">Set code</button>
-                    <span class="muted" style="font-size:12px;">Use the same code on other devices to sync.</span>
+                    <span class="muted" style="font-size: 12px">
+                        Use the same code on other devices to sync.
+                    </span>
                 </div>
                 <div class="controls">
                     <input id="file" type="file" accept="image/*" />
@@ -107,14 +119,18 @@
             const auth = firebase.auth();
 
             // Shared code helpers
-            const ROOM_KEY = 'shareRoom';
-            function getRoom(){ return (localStorage.getItem(ROOM_KEY)||'').trim(); }
-            function setRoom(v){ localStorage.setItem(ROOM_KEY, (v||'').trim()); }
-            document.getElementById('setRoom').addEventListener('click',()=>{
-                setRoom(document.getElementById('room').value);
+            const ROOM_KEY = "shareRoom";
+            function getRoom() {
+                return (localStorage.getItem(ROOM_KEY) || "").trim();
+            }
+            function setRoom(v) {
+                localStorage.setItem(ROOM_KEY, (v || "").trim());
+            }
+            document.getElementById("setRoom").addEventListener("click", () => {
+                setRoom(document.getElementById("room").value);
                 location.reload();
             });
-            document.getElementById('room').value = getRoom();
+            document.getElementById("room").value = getRoom();
 
             function renderDocs(snap) {
                 board.innerHTML = "";
@@ -145,9 +161,11 @@
                 });
             }
             function drag(el, onmove) {
-                let sx, sy, ox, oy;
+                let sx, sy, ox, oy, lastX, lastY, pointerId;
                 el.addEventListener("pointerdown", (e) => {
-                    el.setPointerCapture(e.pointerId);
+                    e.preventDefault();
+                    pointerId = e.pointerId;
+                    el.setPointerCapture(pointerId);
                     sx = e.clientX;
                     sy = e.clientY;
                     const rect = el.getBoundingClientRect();
@@ -165,19 +183,28 @@
                     ny = Math.max(0, Math.min(ny, b.height - el.offsetHeight));
                     el.style.left = nx + "px";
                     el.style.top = ny + "px";
-                    onmove(nx, ny);
+                    lastX = nx;
+                    lastY = ny;
                 });
-                el.addEventListener("pointerup", () => {
-                    sx = sy = null;
+                const end = () => {
+                    if (pointerId != null) {
+                        try { el.releasePointerCapture(pointerId); } catch (_) {}
+                    }
+                    const fx = lastX != null ? lastX : ox;
+                    const fy = lastY != null ? lastY : oy;
+                    if (typeof onmove === 'function') onmove(fx, fy);
+                    sx = sy = lastX = lastY = pointerId = null;
                     el.style.cursor = "grab";
-                });
+                };
+                el.addEventListener("pointerup", end);
+                el.addEventListener("pointercancel", end);
             }
             auth.signInAnonymously().then(() => {
                 const uid = auth.currentUser.uid;
                 const room = getRoom();
                 // realtime
-                let q = db.collection('polaroids');
-                q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                let q = db.collection("polaroids");
+                q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
                 q.onSnapshot(renderDocs);
 
                 // add
@@ -204,8 +231,8 @@
                 document.getElementById("clear").addEventListener("click", async () => {
                     if (!confirm("Clear all photos?")) return;
                     const room = getRoom();
-                    let q = db.collection('polaroids');
-                    q = room ? q.where('room','==', room) : q.where('user','==', uid);
+                    let q = db.collection("polaroids");
+                    q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
                     const snap = await q.get();
                     const batch = db.batch();
                     snap.forEach((doc) => batch.delete(doc.ref));
