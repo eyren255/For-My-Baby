@@ -5,6 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>For My Baby · Shin Myat Tun ❤ Ei Myat Thin Za</title>
         <meta name="description" content="A cute, lovely, and organized site made with love." />
+        <meta property="og:title" content="For My Baby" />
+        <meta property="og:description" content="A cute, lovely, and organized site made with love." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="og-image.svg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="For My Baby" />
+        <meta name="twitter:description" content="A cute, lovely, and organized site made with love." />
+        <meta name="twitter:image" content="og-image.svg" />
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,6 +45,16 @@
                     <span class="chip">✨ Sparkle</span>
                     <span class="chip">💕 Forever</span>
                 </div>
+            </section>
+
+            <!-- ABOUT US -->
+            <section id="about" class="section card">
+                <h2 class="section-title">🌸 About us</h2>
+                <p class="prose">
+                    We’re two hearts sharing one story. This little corner of the web is a scrapbook
+                    of our favorite moments, the smiles we’ve shared, and the days we’ve spent
+                    growing together.
+                </p>
             </section>
 
             <!-- ANNIVERSARY -->
@@ -88,6 +106,13 @@
             </div>
         </footer>
 
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox" aria-hidden="true">
+            <button class="lightbox-close" aria-label="Close">✖</button>
+            <img id="lightboxImg" alt="Photo" />
+            <p id="lightboxCap" class="muted"></p>
+        </div>
+
         <script>
             // Set current year
             document.getElementById("year").textContent = new Date().getFullYear();
@@ -121,6 +146,31 @@
                 const years = nextAnniv.getFullYear() - start.getFullYear();
                 if (milestoneEl)
                     milestoneEl.textContent = years + (years === 1 ? " year" : " years");
+            })();
+
+            // Simple lightbox for gallery
+            (function () {
+                const lb = document.getElementById("lightbox");
+                const img = document.getElementById("lightboxImg");
+                const cap = document.getElementById("lightboxCap");
+                const closeBtn = document.querySelector(".lightbox-close");
+                const gallery = document.querySelector("#gallery .grid.gallery");
+                if (!lb || !img || !gallery) return;
+                function open(src, alt) {
+                    img.src = src; img.alt = alt || ""; cap.textContent = alt || "";
+                    lb.setAttribute("aria-hidden","false"); lb.classList.add("open");
+                    document.body.style.overflow = "hidden";
+                }
+                function close() {
+                    lb.classList.remove("open"); lb.setAttribute("aria-hidden","true");
+                    img.src = ""; cap.textContent = ""; document.body.style.overflow = "";
+                }
+                gallery.addEventListener("click", (e) => {
+                    const t = e.target; if (t && t.tagName === "IMG") open(t.src, t.alt);
+                });
+                closeBtn?.addEventListener("click", close);
+                lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+                window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
             })();
         </script>
     </body>

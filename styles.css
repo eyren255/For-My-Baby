@@ -82,6 +82,11 @@ body {
 .card {
     background: var(--card);
 }
+.prose {
+    line-height: 1.7;
+    max-width: 62ch;
+    margin: 0;
+}
 .title-script {
     font-family: "Great Vibes", cursive;
     font-size: 42px;
@@ -138,6 +143,36 @@ body {
 }
 .site-footer {
     padding: 24px 0;
+}
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 20;
+    padding: 16px;
+}
+.lightbox.open {
+    display: grid;
+}
+.lightbox img {
+    max-width: 90vw;
+    max-height: 70vh;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    background: #fff;
+}
+.lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    border: 1px solid var(--border);
+    background: #fff0f5;
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
 }
 @media (prefers-reduced-motion: reduce) {
     * {
