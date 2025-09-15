@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff0f5"/>
+      <stop offset="50%" stop-color="#ffe4e1"/>
+      <stop offset="100%" stop-color="#fff8dc"/>
+    </linearGradient>
+    <linearGradient id="heart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb3d1"/>
+      <stop offset="50%" stop-color="#ff8bb3"/>
+      <stop offset="100%" stop-color="#e6b3ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g transform="translate(0,30)">
+    <text x="600" y="150" font-size="72" font-family="'Segoe UI', sans-serif" text-anchor="middle" fill="#d63384">Cute &amp; Lovely Theme</text>
+    <text x="600" y="220" font-size="32" font-family="'Segoe UI', sans-serif" text-anchor="middle" fill="#6b5b73">Made with love for someone special</text>
+  </g>
+  <g transform="translate(600,380)">
+    <path d="M0,120 C-80,70 -220,10 -220,-100 C-220,-170 -160,-220 -90,-220 C-40,-220 10,-195 0,-150 C-10,-195 40,-220 90,-220 C160,-220 220,-170 220,-100 C220,10 80,70 0,120 Z" fill="url(#heart)"/>
+  </g>
+  <g>
+    <text x="600" y="560" font-size="28" font-family="'Segoe UI', sans-serif" text-anchor="middle" fill="#8b7d8b">eyren255.github.io/For-My-Baby</text>
+  </g>
+</svg>
+

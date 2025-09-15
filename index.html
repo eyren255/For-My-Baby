@@ -21,7 +21,7 @@
             content="Adorable colors, hearts, sparkles, and a lovely vibe—made with love."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="favicon.svg" />
+        <meta property="og:image" content="og-image.svg" />
         <link rel="canonical" href="https://eyren255.github.io/For-My-Baby/" />
         <meta property="og:url" content="https://eyren255.github.io/For-My-Baby/" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -30,7 +30,7 @@
             name="twitter:description"
             content="Adorable colors, hearts, sparkles, and a lovely vibe—made with love."
         />
-        <meta name="twitter:image" content="favicon.svg" />
+        <meta name="twitter:image" content="og-image.svg" />
         <link rel="manifest" href="site.webmanifest" />
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -233,9 +233,13 @@
                         Interactive
                     </a>
                     <a href="#cards" class="cute-button" style="padding: 6px 14px">Cards</a>
+                    <a href="#gallery" class="cute-button" style="padding: 6px 14px">Gallery</a>
                     <a href="#special" class="cute-button" style="padding: 6px 14px">Special</a>
                     <button id="openSurprise" class="cute-button" style="padding: 6px 14px">
                         Surprise 💌
+                    </button>
+                    <button id="musicToggle" class="cute-button" style="padding: 6px 14px">
+                        Music 🎵
                     </button>
                 </div>
             </div>
@@ -362,6 +366,44 @@ You make my heart skip a beat every day! 💕</textarea
                 </div>
             </div>
 
+            <!-- Gallery -->
+            <div id="gallery" class="demo-section">
+                <h2 class="lovely-subtitle">📸 Our Memories</h2>
+                <p class="sweet-text">Add your photos to make this section truly yours.</p>
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                        gap: 14px;
+                    "
+                >
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love1/600/400"
+                        alt="Memory 1"
+                        style="cursor: pointer; padding: 0"
+                    />
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love2/600/400"
+                        alt="Memory 2"
+                        style="cursor: pointer; padding: 0"
+                    />
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love3/600/400"
+                        alt="Memory 3"
+                        style="cursor: pointer; padding: 0"
+                    />
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love4/600/400"
+                        alt="Memory 4"
+                        style="cursor: pointer; padding: 0"
+                    />
+                </div>
+            </div>
+
             <!-- Special Effects -->
             <div id="special" class="special-effects">
                 <h2 class="lovely-subtitle">✨ Special Effects</h2>
@@ -424,6 +466,24 @@ You make my heart skip a beat every day! 💕</textarea
                 </div>
             </div>
         </div>
+
+        <!-- Lightbox Modal for Gallery -->
+        <div id="lightbox" class="modal-backdrop" aria-hidden="true">
+            <div class="modal" style="max-width: 900px">
+                <div class="close-row">
+                    <button id="closeLightbox" class="close-btn">✖</button>
+                </div>
+                <img id="lightboxImg" src="" alt="Photo" style="width: 100%; border-radius: 12px" />
+            </div>
+        </div>
+
+        <!-- Background Music (replace src with your own MP3 if you like) -->
+        <audio
+            id="bgm"
+            preload="auto"
+            loop
+            src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6c0fba07b1.mp3?filename=romantic-118231.mp3"
+        ></audio>
 
         <script>
             // Back to top behavior
@@ -505,6 +565,57 @@ You make my heart skip a beat every day! 💕</textarea
                 if (closeBtn) closeBtn.addEventListener("click", close);
                 backdrop?.addEventListener("click", (e) => {
                     if (e.target === backdrop) close();
+                });
+                window.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") close();
+                });
+            })();
+
+            // Music toggle
+            (function () {
+                const audio = document.getElementById("bgm");
+                const toggle = document.getElementById("musicToggle");
+                if (!audio || !toggle) return;
+                let playing = false;
+                function updateLabel() {
+                    toggle.textContent = playing ? "Pause 🎵" : "Music 🎵";
+                }
+                toggle.addEventListener("click", async () => {
+                    try {
+                        if (!playing) {
+                            await audio.play();
+                            playing = true;
+                        } else {
+                            audio.pause();
+                            playing = false;
+                        }
+                        updateLabel();
+                    } catch {}
+                });
+                updateLabel();
+            })();
+
+            // Simple lightbox for gallery
+            (function () {
+                const lb = document.getElementById("lightbox");
+                const img = document.getElementById("lightboxImg");
+                const closeBtn = document.getElementById("closeLightbox");
+                const gallery = document.getElementById("gallery");
+                if (!lb || !img || !gallery) return;
+                gallery.addEventListener("click", (e) => {
+                    const target = e.target;
+                    if (target && target.tagName === "IMG") {
+                        img.src = target.src;
+                        lb.style.display = "flex";
+                    }
+                });
+                function close() {
+                    lb.style.display = "none";
+                    img.src = "";
+                }
+                closeBtn?.addEventListener("click", close);
+                lb.addEventListener("click", (e) => {
+                    if (e.target === lb) close();
                 });
                 window.addEventListener("keydown", (e) => {
                     if (e.key === "Escape") close();
