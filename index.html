@@ -30,7 +30,18 @@
         <link rel="manifest" href="site.webmanifest" />
     </head>
     <body>
-        <div id="progress" style="position:fixed;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#ffb3d1,#e6b3ff);transform-origin:left;transform:scaleX(0);z-index:1000"></div>
+        <div
+            id="progress"
+            style="
+                position: fixed;
+                inset: 0 0 auto 0;
+                height: 4px;
+                background: linear-gradient(90deg, #ffb3d1, #e6b3ff);
+                transform-origin: left;
+                transform: scaleX(0);
+                z-index: 1000;
+            "
+        ></div>
         <header class="site-header">
             <div class="container row between center">
                 <a class="brand" href="#hero">For My Baby</a>
@@ -55,8 +66,8 @@
                     <span class="chip">💕 Forever</span>
                 </div>
                 <div class="avatars">
-                    <img src="https://i.pravatar.cc/120?img=5" alt="Shin Myat Tun" class="avatar" />
-                    <img src="https://i.pravatar.cc/120?img=47" alt="Ei Myat Thin Za" class="avatar" />
+                    <img src="images/shin.jpg" alt="Shin Myat Tun" class="avatar" />
+                    <img src="images/ei.jpg" alt="Ei Myat Thin Za" class="avatar" />
                 </div>
             </section>
 
@@ -162,18 +173,23 @@
             })();
 
             // Theme switch (light/dark)
-            (function(){
-                const btn = document.getElementById('themeToggle');
+            (function () {
+                const btn = document.getElementById("themeToggle");
                 const root = document.documentElement;
-                function set(mode){
-                    if(mode==='dark'){ root.classList.add('dark'); btn.textContent='☀️ Day'; }
-                    else { root.classList.remove('dark'); btn.textContent='🌙 Night'; }
-                    localStorage.setItem('theme', mode);
+                function set(mode) {
+                    if (mode === "dark") {
+                        root.classList.add("dark");
+                        btn.textContent = "☀️ Day";
+                    } else {
+                        root.classList.remove("dark");
+                        btn.textContent = "🌙 Night";
+                    }
+                    localStorage.setItem("theme", mode);
                 }
-                const saved=localStorage.getItem('theme');
-                set(saved==='dark'?'dark':'light');
-                btn.addEventListener('click',()=>{
-                    set(root.classList.contains('dark')?'light':'dark');
+                const saved = localStorage.getItem("theme");
+                set(saved === "dark" ? "dark" : "light");
+                btn.addEventListener("click", () => {
+                    set(root.classList.contains("dark") ? "light" : "dark");
                 });
             })();
 
@@ -214,25 +230,25 @@
             })();
 
             // Scroll progress bar
-            (function(){
-                const bar=document.getElementById('progress');
-                if(!bar) return;
-                function update(){
-                    const h=document.documentElement;
-                    const scrolled=h.scrollTop;
-                    const max=h.scrollHeight-h.clientHeight;
-                    const p=max?scrolled/max:0;
-                    bar.style.transform=`scaleX(${p})`;
+            (function () {
+                const bar = document.getElementById("progress");
+                if (!bar) return;
+                function update() {
+                    const h = document.documentElement;
+                    const scrolled = h.scrollTop;
+                    const max = h.scrollHeight - h.clientHeight;
+                    const p = max ? scrolled / max : 0;
+                    bar.style.transform = `scaleX(${p})`;
                 }
-                window.addEventListener('scroll',update,{passive:true});
-                window.addEventListener('resize',update);
+                window.addEventListener("scroll", update, { passive: true });
+                window.addEventListener("resize", update);
                 update();
             })();
 
             // Register service worker (PWA)
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("./sw.js").catch(() => {});
                 });
             }
         </script>
