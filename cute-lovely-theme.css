@@ -1,0 +1,193 @@
+/* 
+ * 💕 Cute & Lovely Color Theme 💕
+ * A romantic and adorable color palette perfect for your special someone
+ * Created with love ❤️
+ */
+
+:root {
+  /* Primary Colors - Soft and Romantic */
+  --primary-pink: #ffb3d1;        /* Soft bubblegum pink */
+  --primary-rose: #ff9ec7;        /* Gentle rose pink */
+  --primary-coral: #ff8bb3;       /* Warm coral pink */
+  
+  /* Secondary Colors - Sweet Pastels */
+  --secondary-lavender: #e6b3ff;  /* Dreamy lavender */
+  --secondary-mint: #b3ffd9;      /* Fresh mint green */
+  --secondary-peach: #ffd9b3;     /* Soft peach */
+  --secondary-sky: #b3e6ff;       /* Baby blue sky */
+  
+  /* Accent Colors - Playful & Cute */
+  --accent-gold: #ffd700;         /* Golden sunshine */
+  --accent-cotton: #fff0f5;       /* Cotton candy */
+  --accent-blush: #ffe4e1;        /* Soft blush */
+  --accent-cream: #fff8dc;        /* Creamy vanilla */
+  
+  /* Neutral Colors - Gentle & Warm */
+  --neutral-white: #fffef7;       /* Warm white */
+  --neutral-soft: #f8f4f0;        /* Soft beige */
+  --neutral-warm: #f5f0e8;        /* Warm cream */
+  --neutral-charcoal: #6b5b73;    /* Soft charcoal */
+  
+  /* Text Colors */
+  --text-primary: #4a3c4a;        /* Deep plum for readability */
+  --text-secondary: #8b7d8b;      /* Muted purple */
+  --text-accent: #d63384;         /* Romantic pink */
+  --text-light: #a8a2a8;          /* Light gray */
+  
+  /* Background Gradients */
+  --gradient-sunset: linear-gradient(135deg, #ffb3d1 0%, #ff8bb3 50%, #e6b3ff 100%);
+  --gradient-dream: linear-gradient(45deg, #fff0f5 0%, #ffe4e1 50%, #fff8dc 100%);
+  --gradient-romance: linear-gradient(180deg, #ffd9b3 0%, #ffb3d1 100%);
+  
+  /* Shadow Colors */
+  --shadow-pink: rgba(255, 179, 209, 0.3);
+  --shadow-soft: rgba(255, 182, 193, 0.2);
+  --shadow-gentle: rgba(255, 192, 203, 0.15);
+  
+  /* Border Colors */
+  --border-soft: #ffb3d1;
+  --border-light: #ffc0cb;
+  --border-subtle: #ffd1dc;
+}
+
+/* Cute Button Styles */
+.cute-button {
+  background: var(--gradient-sunset);
+  border: 2px solid var(--border-soft);
+  border-radius: 25px;
+  color: var(--text-primary);
+  padding: 12px 24px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--shadow-pink);
+}
+
+.cute-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow-soft);
+  background: var(--gradient-romance);
+}
+
+/* Lovely Card Styles */
+.lovely-card {
+  background: var(--gradient-dream);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 8px 25px var(--shadow-gentle);
+  transition: all 0.3s ease;
+}
+
+.lovely-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px var(--shadow-pink);
+}
+
+/* Sweet Input Styles */
+.sweet-input {
+  background: var(--neutral-white);
+  border: 2px solid var(--border-light);
+  border-radius: 15px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.sweet-input:focus {
+  outline: none;
+  border-color: var(--primary-rose);
+  box-shadow: 0 0 10px var(--shadow-soft);
+  background: var(--accent-cotton);
+}
+
+/* Adorable Typography */
+.cute-title {
+  color: var(--text-accent);
+  font-family: 'Brush Script MT', cursive;
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px var(--shadow-gentle);
+  margin: 20px 0;
+}
+
+.lovely-subtitle {
+  color: var(--text-secondary);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 1.3em;
+  margin: 10px 0;
+}
+
+.sweet-text {
+  color: var(--text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+
+/* Heart Animation */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.heart {
+  color: var(--primary-rose);
+  animation: heartbeat 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Sparkle Effect */
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.sparkle {
+  color: var(--accent-gold);
+  animation: sparkle 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Cute Icons */
+.cute-icon {
+  color: var(--primary-coral);
+  font-size: 1.2em;
+  margin: 0 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cute-title {
+    font-size: 2em;
+  }
+  
+  .lovely-card {
+    margin: 5px;
+    padding: 15px;
+  }
+  
+  .cute-button {
+    padding: 10px 20px;
+    font-size: 0.9em;
+  }
+}
+
+/* Special Effects */
+.rainbow-text {
+  background: linear-gradient(45deg, #ffb3d1, #e6b3ff, #b3ffd9, #ffd9b3, #b3e6ff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s ease-in-out infinite;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
