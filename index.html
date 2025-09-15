@@ -36,6 +36,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+        />
+        <link
             href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
             rel="stylesheet"
         />
@@ -43,7 +48,7 @@
         <style>
             body {
                 margin: 0;
-                padding: 20px;
+                padding: 16px;
                 background: var(--gradient-dream);
                 min-height: 100vh;
                 font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -80,18 +85,28 @@
             }
 
             .container {
-                max-width: 1200px;
+                max-width: 960px;
                 margin: 0 auto;
-                padding: 20px;
+                padding: 16px;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            @media (min-width: 900px) {
+                .container {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 20px;
+                }
             }
 
             .header {
                 text-align: center;
-                margin-bottom: 40px;
-                padding: 30px;
+                margin-bottom: 36px;
+                padding: 28px;
                 background: var(--gradient-sunset);
                 border-radius: 25px;
-                box-shadow: 0 10px 30px var(--shadow-pink);
+                box-shadow: 0 8px 24px var(--shadow-pink);
+                grid-column: 1 / -1;
             }
 
             .color-palette {
@@ -123,18 +138,18 @@
             }
 
             .demo-section {
-                margin: 40px 0;
-                padding: 30px;
+                margin: 0;
+                padding: 28px;
                 background: var(--gradient-romance);
                 border-radius: 20px;
-                box-shadow: 0 8px 25px var(--shadow-soft);
+                box-shadow: 0 6px 20px var(--shadow-soft);
             }
 
             .button-group {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 15px;
-                margin: 20px 0;
+                gap: 12px;
+                margin: 16px 0;
             }
 
             .input-group {
@@ -153,15 +168,67 @@
             .icon-showcase {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 20px;
+                gap: 14px;
                 justify-content: center;
-                margin: 20px 0;
+                margin: 16px 0;
                 font-size: 2em;
             }
 
             .special-effects {
                 text-align: center;
                 margin: 30px 0;
+            }
+
+            /* Button sizing + Active nav link */
+            .cute-button {
+                padding: 10px 18px;
+                border-radius: 22px;
+                font-size: 0.95em;
+            }
+            /* Active nav link */
+            .cute-nav .nav-links a.active {
+                outline: 2px solid var(--border-soft);
+                background: var(--accent-cotton);
+            }
+
+            /* Tabs */
+            .tabs {
+                grid-column: 1 / -1;
+                background: var(--neutral-white);
+                border-radius: 18px;
+                box-shadow: 0 6px 20px var(--shadow-soft);
+                padding: 10px;
+            }
+            .tab-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin: 0 0 10px 0;
+                padding: 0;
+                list-style: none;
+            }
+            .tab-list .tab {
+                cursor: pointer;
+            }
+            .tab-panel {
+                display: none;
+            }
+            .tab-panel.active {
+                display: block;
+            }
+            .is-hidden {
+                display: none;
+            }
+
+            /* Reduced motion preference */
+            @media (prefers-reduced-motion: reduce) {
+                .rainbow-text {
+                    animation: none !important;
+                }
+                .heart,
+                .sparkle {
+                    animation: none !important;
+                }
             }
 
             /* Back to top button */
@@ -257,7 +324,7 @@
             </div>
 
             <!-- Personalized Hero -->
-            <section id="hero" class="demo-section" aria-label="Hero">
+            <section id="hero" class="demo-section" aria-label="Hero" style="grid-column: 1 / -1">
                 <h2 class="cute-title" style="font-size: 2.2em; text-align: center; margin-top: 0">
                     For
                     <span id="heroNameA">Shin Myat Tun</span>
@@ -274,51 +341,131 @@
                 </div>
             </section>
 
-            <!-- Card Examples -->
-            <div id="cards" class="demo-section">
-                <h2 class="lovely-subtitle">💌 Lovely Cards</h2>
-                <div
-                    style="
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                        gap: 20px;
-                    "
-                >
-                    <div class="lovely-card">
-                        <h3 class="cute-title" style="font-size: 1.5em; margin: 0 0 15px 0">
-                            Sweet Message
-                        </h3>
+            <!-- Tabs: Anniversary | Reasons | Cards -->
+            <section class="tabs" aria-label="Sections">
+                <ul class="tab-list" role="tablist">
+                    <li>
+                        <button
+                            class="cute-button tab"
+                            role="tab"
+                            aria-controls="tab-anniv"
+                            aria-selected="true"
+                        >
+                            Anniversary
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            class="cute-button tab"
+                            role="tab"
+                            aria-controls="tab-reasons"
+                            aria-selected="false"
+                        >
+                            Reasons
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            class="cute-button tab"
+                            role="tab"
+                            aria-controls="tab-cards"
+                            aria-selected="false"
+                        >
+                            Cards
+                        </button>
+                    </li>
+                </ul>
+                <div id="tab-anniv" class="tab-panel active" role="tabpanel">
+                    <div id="anniversary" class="demo-section" aria-live="polite" style="margin: 0">
+                        <h2 class="lovely-subtitle">📅 Anniversary Countdown</h2>
                         <p class="sweet-text">
-                            Every day with you is a beautiful adventure filled with love, laughter,
-                            and countless precious moments. You make everything better just by being
-                            you! 💕
+                            Next anniversary in
+                            <strong>
+                                <span id="daysToAnniv">0</span>
+                                days
+                            </strong>
+                            🎉
                         </p>
-                        <div class="icon-showcase" style="font-size: 1.5em; margin: 15px 0">
-                            <span class="heart">💖</span>
-                            <span class="sparkle">✨</span>
-                            <span class="heart">💕</span>
-                        </div>
+                        <p class="sweet-text">
+                            Milestone:
+                            <span id="nextMilestone">1 year</span>
+                        </p>
                     </div>
-
-                    <div class="lovely-card">
-                        <h3 class="cute-title" style="font-size: 1.5em; margin: 0 0 15px 0">
-                            Romantic Quote
-                        </h3>
-                        <p class="sweet-text">
-                            "In all the world, there is no heart for me like yours. In all the
-                            world, there is no love for you like mine." - Maya Angelou
-                        </p>
-                        <div class="icon-showcase" style="font-size: 1.5em; margin: 15px 0">
-                            <span class="cute-icon">🌹</span>
-                            <span class="heart">💝</span>
-                            <span class="cute-icon">🦋</span>
+                </div>
+                <div id="tab-reasons" class="tab-panel" role="tabpanel">
+                    <div id="reasons" class="demo-section" style="margin: 0">
+                        <h2 class="lovely-subtitle">💗 Reasons I Love You</h2>
+                        <ul
+                            id="reasonsList"
+                            class="sweet-text"
+                            style="list-style: none; padding: 0; margin: 0"
+                        >
+                            <li>You're my safe place and my adventure</li>
+                            <li>Your smile brightens my whole day</li>
+                            <li>You care in a million tiny ways</li>
+                            <li>We laugh at the same silly things</li>
+                            <li>You make love feel easy and true</li>
+                        </ul>
+                        <div class="icon-showcase" style="margin-top: 10px">
+                            <button
+                                id="prevReason"
+                                class="cute-button"
+                                aria-label="Previous reason"
+                            >
+                                ◀
+                            </button>
+                            <button id="nextReason" class="cute-button" aria-label="Next reason">
+                                ▶
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div id="tab-cards" class="tab-panel" role="tabpanel">
+                    <div class="demo-section" style="margin: 0">
+                        <h2 class="lovely-subtitle">💌 Lovely Cards</h2>
+                        <div
+                            style="
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                                gap: 20px;
+                            "
+                        >
+                            <div class="lovely-card">
+                                <h3 class="cute-title" style="font-size: 1.5em; margin: 0 0 15px 0">
+                                    Sweet Message
+                                </h3>
+                                <p class="sweet-text">
+                                    Every day with you is a beautiful adventure filled with love,
+                                    laughter, and countless precious moments. You make everything
+                                    better just by being you! 💕
+                                </p>
+                                <div class="icon-showcase" style="font-size: 1.5em; margin: 15px 0">
+                                    <span class="heart">💖</span>
+                                    <span class="sparkle">✨</span>
+                                    <span class="heart">💕</span>
+                                </div>
+                            </div>
+                            <div class="lovely-card">
+                                <h3 class="cute-title" style="font-size: 1.5em; margin: 0 0 15px 0">
+                                    Romantic Quote
+                                </h3>
+                                <p class="sweet-text">
+                                    "In all the world, there is no heart for me like yours. In all
+                                    the world, there is no love for you like mine." - Maya Angelou
+                                </p>
+                                <div class="icon-showcase" style="font-size: 1.5em; margin: 15px 0">
+                                    <span class="cute-icon">🌹</span>
+                                    <span class="heart">💝</span>
+                                    <span class="cute-icon">🦋</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Gallery -->
-            <div id="gallery" class="demo-section">
+            <div id="gallery" class="demo-section" style="grid-column: 1 / -1">
                 <h2 class="lovely-subtitle">📸 Our Memories</h2>
                 <p class="sweet-text">Add your photos to make this section truly yours.</p>
                 <div
@@ -409,6 +556,11 @@
                     <button id="closeLightbox" class="close-btn">✖</button>
                 </div>
                 <img id="lightboxImg" src="" alt="Photo" style="width: 100%; border-radius: 12px" />
+                <p
+                    id="lightboxCaption"
+                    class="sweet-text"
+                    style="margin-top: 10px; text-align: center"
+                ></p>
             </div>
         </div>
 
@@ -452,6 +604,75 @@
         </div>
 
         <script>
+            // Tabs logic (click + keyboard)
+            (function () {
+                const tabs = Array.from(document.querySelectorAll(".tabs .tab"));
+                const panels = {
+                    anniv: document.getElementById("tab-anniv"),
+                    reasons: document.getElementById("tab-reasons"),
+                    cards: document.getElementById("tab-cards")
+                };
+                function activate(btn) {
+                    tabs.forEach((t) => t.setAttribute("aria-selected", "false"));
+                    btn.setAttribute("aria-selected", "true");
+                    Object.values(panels).forEach((p) => p.classList.remove("active"));
+                    const id = btn.getAttribute("aria-controls");
+                    const panel = document.getElementById(id);
+                    panel?.classList.add("active");
+                }
+                tabs.forEach((t, i) => {
+                    t.addEventListener("click", () => activate(t));
+                    t.addEventListener("keydown", (e) => {
+                        if (e.key === "ArrowRight") tabs[(i + 1) % tabs.length].focus();
+                        if (e.key === "ArrowLeft")
+                            tabs[(i - 1 + tabs.length) % tabs.length].focus();
+                        if (e.key === "Enter" || e.key === " ") activate(t);
+                    });
+                });
+                // init
+                const first = tabs[0];
+                if (first) activate(first);
+            })();
+            // Smooth scroll with offset for sticky nav
+            (function () {
+                const nav = document.querySelector(".cute-nav");
+                const links = document.querySelectorAll('.cute-nav .nav-links a[href^="#"]');
+                const offset = () => (nav ? nav.getBoundingClientRect().height + 10 : 60);
+                links.forEach((a) => {
+                    a.addEventListener("click", (e) => {
+                        const id = a.getAttribute("href");
+                        if (!id || id === "#") return;
+                        const el = document.querySelector(id);
+                        if (!el) return;
+                        e.preventDefault();
+                        const top = el.getBoundingClientRect().top + window.scrollY - offset();
+                        window.scrollTo({ top, behavior: "smooth" });
+                    });
+                });
+            })();
+
+            // Active nav highlighting
+            (function () {
+                const sections = ["#hero", "#anniversary", "#reasons", "#gallery", "#cards"]
+                    .map((s) => document.querySelector(s))
+                    .filter(Boolean);
+                const links = Array.from(document.querySelectorAll(".cute-nav .nav-links a"));
+                function setActive(id) {
+                    links.forEach((l) =>
+                        l.classList.toggle("active", l.getAttribute("href") === id)
+                    );
+                }
+                function onScroll() {
+                    const y = window.scrollY + window.innerHeight * 0.25;
+                    let current = "#hero";
+                    sections.forEach((sec) => {
+                        if (sec.offsetTop <= y) current = "#" + sec.id;
+                    });
+                    setActive(current);
+                }
+                window.addEventListener("scroll", onScroll, { passive: true });
+                onScroll();
+            })();
             // Back to top behavior
             (function () {
                 const btn = document.getElementById("backToTop");
@@ -648,6 +869,7 @@
             (function () {
                 const lb = document.getElementById("lightbox");
                 const img = document.getElementById("lightboxImg");
+                const caption = document.getElementById("lightboxCaption");
                 const closeBtn = document.getElementById("closeLightbox");
                 const gallery = document.getElementById("gallery");
                 if (!lb || !img || !gallery) return;
@@ -655,12 +877,14 @@
                     const target = e.target;
                     if (target && target.tagName === "IMG") {
                         img.src = target.src;
+                        if (caption) caption.textContent = target.alt || "";
                         lb.style.display = "flex";
                     }
                 });
                 function close() {
                     lb.style.display = "none";
                     img.src = "";
+                    if (caption) caption.textContent = "";
                 }
                 closeBtn?.addEventListener("click", close);
                 lb.addEventListener("click", (e) => {
