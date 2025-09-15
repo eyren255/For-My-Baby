@@ -228,25 +228,15 @@
                     <span id="daysTogether" class="days-counter">0</span>
                 </div>
                 <div class="nav-links">
-                    <a href="#palette" class="cute-button" style="padding: 6px 14px">Palette</a>
-                    <a href="#interactive" class="cute-button" style="padding: 6px 14px">
-                        Interactive
-                    </a>
-                    <a href="#cards" class="cute-button" style="padding: 6px 14px">Cards</a>
+                    <a href="#hero" class="cute-button" style="padding: 6px 14px">Home</a>
                     <a href="#anniversary" class="cute-button" style="padding: 6px 14px">
                         Anniversary
                     </a>
                     <a href="#reasons" class="cute-button" style="padding: 6px 14px">Reasons</a>
                     <a href="#gallery" class="cute-button" style="padding: 6px 14px">Gallery</a>
-                    <a href="#special" class="cute-button" style="padding: 6px 14px">Special</a>
+                    <a href="#cards" class="cute-button" style="padding: 6px 14px">Cards</a>
                     <button id="openSurprise" class="cute-button" style="padding: 6px 14px">
                         Surprise 💌
-                    </button>
-                    <button id="balloonsToggle" class="cute-button" style="padding: 6px 14px">
-                        Balloons 🎈
-                    </button>
-                    <button id="musicToggle" class="cute-button" style="padding: 6px 14px">
-                        Music 🎵
                     </button>
                 </div>
             </div>
@@ -267,7 +257,7 @@
             </div>
 
             <!-- Personalized Hero -->
-            <section class="demo-section" aria-label="Hero">
+            <section id="hero" class="demo-section" aria-label="Hero">
                 <h2 class="cute-title" style="font-size: 2.2em; text-align: center; margin-top: 0">
                     For
                     <span id="heroNameA">Shin Myat Tun</span>
@@ -283,70 +273,6 @@
                     <span class="heart">💕</span>
                 </div>
             </section>
-
-            <!-- Color Palette Showcase -->
-            <div id="palette" class="demo-section">
-                <h2 class="lovely-subtitle">🎨 Color Palette</h2>
-                <div class="color-palette">
-                    <div class="color-card">
-                        <div class="color-swatch" style="background: var(--primary-pink)"></div>
-                        <h3>Primary Pink</h3>
-                        <p>#ffb3d1</p>
-                    </div>
-                    <div class="color-card">
-                        <div class="color-swatch" style="background: var(--primary-rose)"></div>
-                        <h3>Primary Rose</h3>
-                        <p>#ff9ec7</p>
-                    </div>
-                    <div class="color-card">
-                        <div
-                            class="color-swatch"
-                            style="background: var(--secondary-lavender)"
-                        ></div>
-                        <h3>Lavender</h3>
-                        <p>#e6b3ff</p>
-                    </div>
-                    <div class="color-card">
-                        <div class="color-swatch" style="background: var(--secondary-mint)"></div>
-                        <h3>Mint</h3>
-                        <p>#b3ffd9</p>
-                    </div>
-                    <div class="color-card">
-                        <div class="color-swatch" style="background: var(--secondary-peach)"></div>
-                        <h3>Peach</h3>
-                        <p>#ffd9b3</p>
-                    </div>
-                    <div class="color-card">
-                        <div class="color-swatch" style="background: var(--accent-gold)"></div>
-                        <h3>Gold</h3>
-                        <p>#ffd700</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interactive Elements Demo -->
-            <div id="interactive" class="demo-section">
-                <h2 class="lovely-subtitle">🎯 Interactive Elements</h2>
-
-                <div class="button-group">
-                    <button class="cute-button">Click Me! 💕</button>
-                    <button class="cute-button">Sweet Button 🌸</button>
-                    <button class="cute-button">Lovely Click ✨</button>
-                </div>
-
-                <div class="input-group">
-                    <input
-                        type="text"
-                        class="sweet-input"
-                        placeholder="Type something sweet... 💖"
-                        value="I love you!"
-                    />
-                    <input type="email" class="sweet-input" placeholder="Your email address" />
-                    <textarea class="sweet-input" placeholder="Write a lovely message..." rows="3">
-You make my heart skip a beat every day! 💕</textarea
-                    >
-                </div>
-            </div>
 
             <!-- Card Examples -->
             <div id="cards" class="demo-section">
@@ -429,22 +355,6 @@ You make my heart skip a beat every day! 💕</textarea
                 </div>
             </div>
 
-            <!-- Special Effects -->
-            <div id="special" class="special-effects">
-                <h2 class="lovely-subtitle">✨ Special Effects</h2>
-                <p class="sweet-text rainbow-text" style="font-size: 1.2em; font-weight: bold">
-                    This text has a rainbow effect! 🌈
-                </p>
-                <div class="icon-showcase" style="margin: 30px 0">
-                    <span class="heart">💕</span>
-                    <span class="sparkle">✨</span>
-                    <span class="heart">💖</span>
-                    <span class="sparkle">🌟</span>
-                    <span class="heart">💝</span>
-                    <span class="sparkle">💫</span>
-                </div>
-            </div>
-
             <!-- Footer -->
             <div class="lovely-card" style="text-align: center; margin-top: 40px">
                 <h3 class="cute-title" style="font-size: 1.8em; margin: 0 0 15px 0">
@@ -501,14 +411,6 @@ You make my heart skip a beat every day! 💕</textarea
                 <img id="lightboxImg" src="" alt="Photo" style="width: 100%; border-radius: 12px" />
             </div>
         </div>
-
-        <!-- Background Music (replace src with your own MP3 if you like) -->
-        <audio
-            id="bgm"
-            preload="auto"
-            loop
-            src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6c0fba07b1.mp3?filename=romantic-118231.mp3"
-        ></audio>
 
         <!-- Anniversary + Reasons + Contact -->
         <div id="anniversary" class="demo-section" aria-live="polite">
@@ -740,30 +642,6 @@ You make my heart skip a beat every day! 💕</textarea
                 window.addEventListener("keydown", (e) => {
                     if (e.key === "Escape") close();
                 });
-            })();
-
-            // Music toggle
-            (function () {
-                const audio = document.getElementById("bgm");
-                const toggle = document.getElementById("musicToggle");
-                if (!audio || !toggle) return;
-                let playing = false;
-                function updateLabel() {
-                    toggle.textContent = playing ? "Pause 🎵" : "Music 🎵";
-                }
-                toggle.addEventListener("click", async () => {
-                    try {
-                        if (!playing) {
-                            await audio.play();
-                            playing = true;
-                        } else {
-                            audio.pause();
-                            playing = false;
-                        }
-                        updateLabel();
-                    } catch {}
-                });
-                updateLabel();
             })();
 
             // Simple lightbox for gallery
