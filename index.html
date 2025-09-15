@@ -233,10 +233,17 @@
                         Interactive
                     </a>
                     <a href="#cards" class="cute-button" style="padding: 6px 14px">Cards</a>
+                    <a href="#anniversary" class="cute-button" style="padding: 6px 14px">
+                        Anniversary
+                    </a>
+                    <a href="#reasons" class="cute-button" style="padding: 6px 14px">Reasons</a>
                     <a href="#gallery" class="cute-button" style="padding: 6px 14px">Gallery</a>
                     <a href="#special" class="cute-button" style="padding: 6px 14px">Special</a>
                     <button id="openSurprise" class="cute-button" style="padding: 6px 14px">
                         Surprise 💌
+                    </button>
+                    <button id="balloonsToggle" class="cute-button" style="padding: 6px 14px">
+                        Balloons 🎈
                     </button>
                     <button id="musicToggle" class="cute-button" style="padding: 6px 14px">
                         Music 🎵
@@ -258,6 +265,24 @@
                     <span class="sparkle">🌟</span>
                 </div>
             </div>
+
+            <!-- Personalized Hero -->
+            <section class="demo-section" aria-label="Hero">
+                <h2 class="cute-title" style="font-size: 2.2em; text-align: center; margin-top: 0">
+                    For
+                    <span id="heroNameA">Shin Myat Tun</span>
+                    ❤
+                    <span id="heroNameB">Ei Myat Thin Za</span>
+                </h2>
+                <p class="sweet-text" style="text-align: center">
+                    Together is my favorite place to be.
+                </p>
+                <div class="icon-showcase" style="font-size: 2.2em">
+                    <span class="heart">💖</span>
+                    <span class="sparkle">✨</span>
+                    <span class="heart">💕</span>
+                </div>
+            </section>
 
             <!-- Color Palette Showcase -->
             <div id="palette" class="demo-section">
@@ -485,6 +510,45 @@ You make my heart skip a beat every day! 💕</textarea
             src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6c0fba07b1.mp3?filename=romantic-118231.mp3"
         ></audio>
 
+        <!-- Anniversary + Reasons + Contact -->
+        <div id="anniversary" class="demo-section" aria-live="polite">
+            <h2 class="lovely-subtitle">📅 Anniversary Countdown</h2>
+            <p class="sweet-text">
+                Next anniversary in
+                <strong>
+                    <span id="daysToAnniv">0</span>
+                    days
+                </strong>
+                🎉
+            </p>
+            <p class="sweet-text">
+                Milestone:
+                <span id="nextMilestone">1 year</span>
+            </p>
+        </div>
+
+        <div id="reasons" class="demo-section">
+            <h2 class="lovely-subtitle">💗 Reasons I Love You</h2>
+            <ul id="reasonsList" class="sweet-text" style="list-style: none; padding: 0; margin: 0">
+                <li>You're my safe place and my adventure</li>
+                <li>Your smile brightens my whole day</li>
+                <li>You care in a million tiny ways</li>
+                <li>We laugh at the same silly things</li>
+                <li>You make love feel easy and true</li>
+            </ul>
+            <div class="icon-showcase" style="margin-top: 10px">
+                <button id="prevReason" class="cute-button" aria-label="Previous reason">◀</button>
+                <button id="nextReason" class="cute-button" aria-label="Next reason">▶</button>
+            </div>
+        </div>
+
+        <div id="contact" class="demo-section">
+            <h2 class="lovely-subtitle">📬 Send a Message</h2>
+            <p class="sweet-text">
+                Contact form skipped as requested. You can add it later anytime.
+            </p>
+        </div>
+
         <script>
             // Back to top behavior
             (function () {
@@ -499,6 +563,88 @@ You make my heart skip a beat every day! 💕</textarea
                 );
             })();
 
+            // Balloons toggle (fun animation)
+            (function () {
+                const container = document.querySelector(".hearts-container");
+                const toggle = document.getElementById("balloonsToggle");
+                if (!container || !toggle) return;
+                let on = false;
+                let timer;
+                function spawnBalloon() {
+                    const span = document.createElement("span");
+                    span.textContent = "🎈";
+                    span.style.position = "absolute";
+                    span.style.left = Math.random() * 100 + "vw";
+                    span.style.bottom = "-40px";
+                    span.style.fontSize = Math.random() * 1.2 + 1 + "rem";
+                    span.style.filter = "drop-shadow(0 6px 10px rgba(255, 105, 180, 0.35))";
+                    container.appendChild(span);
+                    const duration = 6000 + Math.random() * 4000;
+                    const xDrift = (Math.random() - 0.5) * 120;
+                    const start = performance.now();
+                    function animate(now) {
+                        const t = Math.min(1, (now - start) / duration);
+                        span.style.transform = `translate(${xDrift * t}px, ${
+                            -window.innerHeight * t
+                        }px)`;
+                        span.style.opacity = String(1 - t);
+                        if (t < 1) requestAnimationFrame(animate);
+                        else span.remove();
+                    }
+                    requestAnimationFrame(animate);
+                }
+                toggle.addEventListener("click", () => {
+                    on = !on;
+                    toggle.textContent = on ? "Balloons ✖" : "Balloons 🎈";
+                    if (on) timer = setInterval(spawnBalloon, 1000);
+                    else clearInterval(timer);
+                });
+            })();
+
+            // Anniversary countdown + next milestone
+            (function () {
+                const startDateStr = "2025-09-13"; // Anniversary
+                const start = new Date(startDateStr + "T00:00:00");
+                const daysEl = document.getElementById("daysToAnniv");
+                const milestoneEl = document.getElementById("nextMilestone");
+                if (!daysEl || !milestoneEl || isNaN(start.getTime())) return;
+                const today = new Date();
+                const currentYear = today.getFullYear();
+                const month = (start.getMonth() + 1).toString().padStart(2, "0");
+                const day = start.getDate().toString().padStart(2, "0");
+                const annivThisYear = new Date(`${currentYear}-${month}-${day}T00:00:00`);
+                const nextAnniv =
+                    annivThisYear >= new Date(today.toDateString())
+                        ? annivThisYear
+                        : new Date(`${currentYear + 1}-${month}-${day}T00:00:00`);
+                const diffDays = Math.ceil((nextAnniv - new Date()) / 86400000);
+                daysEl.textContent = String(Math.max(0, diffDays));
+                const years = nextAnniv.getFullYear() - start.getFullYear();
+                milestoneEl.textContent = years + (years === 1 ? " year" : " years");
+            })();
+
+            // Reasons carousel (auto-rotate + buttons)
+            (function () {
+                const list = document.getElementById("reasonsList");
+                const prev = document.getElementById("prevReason");
+                const next = document.getElementById("nextReason");
+                if (!list || !prev || !next) return;
+                let index = 0;
+                const items = Array.from(list.children);
+                function render() {
+                    items.forEach((li, i) => {
+                        li.style.display = i === index ? "list-item" : "none";
+                    });
+                }
+                function go(d) {
+                    index = (index + d + items.length) % items.length;
+                    render();
+                }
+                prev.addEventListener("click", () => go(-1));
+                next.addEventListener("click", () => go(1));
+                render();
+                setInterval(() => go(1), 4000);
+            })();
             // Floating hearts
             (function () {
                 const container = document.querySelector(".hearts-container");
@@ -536,7 +682,7 @@ You make my heart skip a beat every day! 💕</textarea
 
             // Days together counter - set your start date here (YYYY-MM-DD)
             (function () {
-                const startDateStr = "2024-02-14"; // CHANGE this to your special date
+                const startDateStr = "2025-09-13"; // Special date
                 const start = new Date(startDateStr + "T00:00:00");
                 const el = document.getElementById("daysTogether");
                 if (!isNaN(start.getTime()) && el) {
@@ -557,6 +703,31 @@ You make my heart skip a beat every day! 💕</textarea
                 const backdrop = document.getElementById("surpriseBackdrop");
                 function open() {
                     backdrop.style.display = "flex";
+                    // Confetti burst
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => {
+                            const conf = document.createElement("span");
+                            conf.textContent = ["✨", "💖", "🌸", "💫"][
+                                Math.floor(Math.random() * 4)
+                            ];
+                            conf.style.position = "fixed";
+                            conf.style.left = Math.random() * 100 + "vw";
+                            conf.style.top = "-20px";
+                            conf.style.fontSize = Math.random() * 1.2 + 0.8 + "rem";
+                            conf.style.filter = "drop-shadow(0 6px 10px rgba(255,105,180,.35))";
+                            document.body.appendChild(conf);
+                            const dur = 1500 + Math.random() * 1500;
+                            const start = performance.now();
+                            function anim(now) {
+                                const t = Math.min(1, (now - start) / dur);
+                                conf.style.transform = `translate(0, ${t * 120}vh)`;
+                                conf.style.opacity = String(1 - t);
+                                if (t < 1) requestAnimationFrame(anim);
+                                else conf.remove();
+                            }
+                            requestAnimationFrame(anim);
+                        }, i * 40);
+                    }
                 }
                 function close() {
                     backdrop.style.display = "none";
