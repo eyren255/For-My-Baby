@@ -1,29 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-kitty">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Anniversary tracker with days together and next milestone."
+        />
+        <meta property="og:title" content="Anniversary · For My Baby" />
+        <meta
+            property="og:description"
+            content="See days together and time to the next anniversary."
+        />
+        <meta property="og:type" content="website" />
         <title>Anniversary · For My Baby</title>
         <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
     </head>
     <body>
         <header class="site-header">
-            <div class="container row between center">
-                <a class="brand" href="../index.html">For My Baby</a>
+            <div class="container wide row between center">
+                <a class="brand" href="../index.html#hero">For My Baby</a>
                 <nav class="nav">
-                    <a href="../index.html">Home</a>
-                    <a href="./anniversary.html" aria-current="page">Anniversary</a>
-                    <a href="./reasons.html">Reasons</a>
-                    <a href="./cards.html">Cards</a>
+                    <a href="../index.html">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎉</span>
+                            <span class="nav-text">Celebrate</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="anniversary.html" aria-current="page">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Anniversary</span>
+                            </a>
+                            <a href="cards.html">
+                                <span class="nav-icon">💌</span>
+                                <span class="nav-text">Cards</span>
+                            </a>
+                            <a href="reasons.html">
+                                <span class="nav-icon">💗</span>
+                                <span class="nav-text">Reasons</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">💝</span>
+                            <span class="nav-text">Memories</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="timeline.html">
+                                <span class="nav-icon">🗓️</span>
+                                <span class="nav-text">Timeline</span>
+                            </a>
+                            <a href="polaroid.html">
+                                <span class="nav-icon">📷</span>
+                                <span class="nav-text">Gallery</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎮</span>
+                            <span class="nav-text">Play</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="quiz.html">
+                                <span class="nav-icon">💘</span>
+                                <span class="nav-text">Love Quiz</span>
+                            </a>
+                            <a href="tictactoe.html">
+                                <span class="nav-icon">❌⭕</span>
+                                <span class="nav-text">Tic‑tac‑toe</span>
+                            </a>
+                        </div>
+                    </details>
+                    <a href="study.html">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Study</span>
+                    </a>
                 </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙</button>
             </div>
         </header>
         <main class="container site-grid">
@@ -59,10 +127,28 @@
                 const annivEl = document.getElementById("daysToAnniv");
                 const milestoneEl = document.getElementById("nextMilestone");
                 if (isNaN(start.getTime())) return;
+                function animateCount(el, to, duration = 1200) {
+                    if (!el) return;
+                    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+                    if (media.matches) {
+                        el.textContent = String(Math.max(0, Math.floor(to)));
+                        return;
+                    }
+                    const from = 0;
+                    const startTime = performance.now();
+                    function frame(now) {
+                        const t = Math.min(1, (now - startTime) / duration);
+                        const eased = 1 - Math.pow(1 - t, 3);
+                        const val = Math.round(from + (to - from) * eased);
+                        el.textContent = String(val);
+                        if (t < 1) requestAnimationFrame(frame);
+                    }
+                    requestAnimationFrame(frame);
+                }
                 const today = new Date();
                 const diffMs = today.setHours(0, 0, 0, 0) - start.setHours(0, 0, 0, 0);
                 const days = Math.max(0, Math.floor(diffMs / 86400000));
-                if (daysEl) daysEl.textContent = String(days);
+                if (daysEl) animateCount(daysEl, days);
                 const year = today.getFullYear();
                 const m = (start.getMonth() + 1).toString().padStart(2, "0");
                 const d = start.getDate().toString().padStart(2, "0");
@@ -72,7 +158,7 @@
                         ? thisAnniv
                         : new Date(`${year + 1}-${m}-${d}T00:00:00`);
                 const daysTo = Math.ceil((nextAnniv - new Date()) / 86400000);
-                if (annivEl) annivEl.textContent = String(Math.max(0, daysTo));
+                if (annivEl) animateCount(annivEl, Math.max(0, daysTo), 900);
                 const years = nextAnniv.getFullYear() - start.getFullYear();
                 if (milestoneEl)
                     milestoneEl.textContent = years + (years === 1 ? " year" : " years");

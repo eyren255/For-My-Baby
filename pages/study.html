@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-kitty">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Cozy study tab with Pomodoro timer and love notes." />
+        <meta property="og:title" content="Study · For My Baby" />
+        <meta property="og:description" content="Pomodoro focus with soft pastel vibes." />
+        <meta property="og:type" content="website" />
+        <title>Study · For My Baby</title>
+        <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
+        <style>
+            .study-wrap {
+                display: grid;
+                gap: 14px;
+                justify-items: center;
+            }
+            .pomodoro {
+                width: 240px;
+                height: 240px;
+                border-radius: 24px;
+                display: grid;
+                place-items: center;
+                background: linear-gradient(180deg, #fff 0%, #fff8fb 100%);
+                border: 1px solid var(--border);
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08),
+                    inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+                position: relative;
+            }
+            .pomodoro::after {
+                content: "";
+                position: absolute;
+                inset: -6px;
+                border-radius: 30px;
+                background: radial-gradient(
+                    60% 60% at 50% 40%,
+                    rgba(255, 179, 209, 0.2),
+                    rgba(191, 166, 255, 0.12) 60%,
+                    transparent 70%
+                );
+                filter: blur(6px);
+                pointer-events: none;
+            }
+            .time {
+                font-size: 44px;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+            .mode {
+                color: var(--muted);
+                margin-top: 4px;
+            }
+            .controls {
+                display: flex;
+                gap: 8px;
+            }
+            .notes {
+                min-height: 20px;
+                color: var(--muted);
+            }
+            .ring {
+                position: absolute;
+                inset: 8px;
+                border-radius: 18px;
+                pointer-events: none;
+                background: conic-gradient(
+                    var(--accent) calc(var(--p, 0) * 1%),
+                    rgba(0, 0, 0, 0) 0
+                );
+                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                -webkit-mask-composite: destination-out;
+                padding: 6px;
+                box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+            }
+            @media (max-width: 480px) {
+                .pomodoro {
+                    width: 200px;
+                    height: 200px;
+                }
+                .time {
+                    font-size: 36px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container wide row between center">
+                <a class="brand" href="../index.html#hero">For My Baby</a>
+                <nav class="nav">
+                    <a href="../index.html">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎉</span>
+                            <span class="nav-text">Celebrate</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="anniversary.html">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Anniversary</span>
+                            </a>
+                            <a href="cards.html">
+                                <span class="nav-icon">💌</span>
+                                <span class="nav-text">Cards</span>
+                            </a>
+                            <a href="reasons.html">
+                                <span class="nav-icon">💗</span>
+                                <span class="nav-text">Reasons</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">💝</span>
+                            <span class="nav-text">Memories</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="timeline.html">
+                                <span class="nav-icon">🗓️</span>
+                                <span class="nav-text">Timeline</span>
+                            </a>
+                            <a href="polaroid.html">
+                                <span class="nav-icon">📷</span>
+                                <span class="nav-text">Gallery</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎮</span>
+                            <span class="nav-text">Play</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="quiz.html">
+                                <span class="nav-icon">💘</span>
+                                <span class="nav-text">Love Quiz</span>
+                            </a>
+                            <a href="tictactoe.html">
+                                <span class="nav-icon">❌⭕</span>
+                                <span class="nav-text">Tic‑tac‑toe</span>
+                            </a>
+                        </div>
+                    </details>
+                    <a href="study.html" aria-current="page">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Study</span>
+                    </a>
+                </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙</button>
+            </div>
+        </header>
+        <main class="container site-grid">
+            <section class="section card span-2">
+                <h1 class="section-title">📚 Cozy Study</h1>
+                <div class="study-wrap">
+                    <div class="pomodoro reveal" id="pom">
+                        <div class="ring" id="ring" aria-hidden="true"></div>
+                        <div class="time" id="time">25:00</div>
+                        <div class="mode" id="mode">Focus 25 • Break 5</div>
+                    </div>
+                    <div class="controls">
+                        <button class="btn pixel" id="start">Start</button>
+                        <button class="btn pixel" id="pause">Pause</button>
+                        <button class="btn pixel" id="reset">Reset</button>
+                    </div>
+                    <div class="notes" id="note">Proud of you 💖</div>
+                </div>
+                <div class="decor" aria-hidden="true"></div>
+            </section>
+        </main>
+        <footer class="site-footer">
+            <div class="container center muted">
+                Made with 💕 · ©
+                <span id="year"></span>
+            </div>
+        </footer>
+        <script>
+            document.getElementById("year").textContent = new Date().getFullYear();
+
+            // Theme toggle
+            (function () {
+                const btn = document.getElementById("themeToggle");
+                const root = document.documentElement;
+                function set(mode) {
+                    if (mode === "dark") {
+                        root.classList.add("dark");
+                        btn.textContent = "☀️";
+                    } else {
+                        root.classList.remove("dark");
+                        btn.textContent = "🌙";
+                    }
+                    localStorage.setItem("theme", mode);
+                }
+                const saved = localStorage.getItem("theme");
+                set(saved === "dark" ? "dark" : "light");
+                btn.addEventListener("click", () => {
+                    set(root.classList.contains("dark") ? "light" : "dark");
+                });
+            })();
+            (function () {
+                const focusMin = 25,
+                    breakMin = 5;
+                const timeEl = document.getElementById("time");
+                const modeEl = document.getElementById("mode");
+                const ring = document.getElementById("ring");
+                const startBtn = document.getElementById("start");
+                const pauseBtn = document.getElementById("pause");
+                const resetBtn = document.getElementById("reset");
+                const notes = [
+                    "Proud of you 💖",
+                    "You're my hardworking star 🌟",
+                    "One step closer to your dreams ✨",
+                    "Little steps, big love 💕",
+                    "You’ve got this, my dear 🌸"
+                ];
+                const noteEl = document.getElementById("note");
+                let noteIdx = 0;
+                setInterval(() => {
+                    noteIdx = (noteIdx + 1) % notes.length;
+                    noteEl.textContent = notes[noteIdx];
+                }, 7000);
+
+                let seconds = focusMin * 60;
+                let total = seconds;
+                let isFocus = true;
+                let raf;
+                let lastTick;
+                function fmt(s) {
+                    const m = Math.floor(s / 60),
+                        sec = s % 60;
+                    return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+                }
+                function updateUI() {
+                    timeEl.textContent = fmt(seconds);
+                    const p = 100 - Math.floor((seconds / total) * 100);
+                    ring.style.setProperty("--p", p);
+                    modeEl.textContent =
+                        (isFocus ? `Focus ${focusMin}` : `Break ${breakMin}`) +
+                        " • " +
+                        (isFocus ? `Break ${breakMin}` : `Focus ${focusMin}`);
+                }
+                function tick(now) {
+                    if (!lastTick) lastTick = now;
+                    if (now - lastTick >= 1000) {
+                        seconds = Math.max(0, seconds - 1);
+                        lastTick = now;
+                        updateUI();
+                        if (seconds === 0) {
+                            // swap sessions
+                            isFocus = !isFocus;
+                            seconds = (isFocus ? focusMin : breakMin) * 60;
+                            total = seconds;
+                        }
+                    }
+                    raf = requestAnimationFrame(tick);
+                }
+                startBtn.addEventListener("click", () => {
+                    if (!raf) raf = requestAnimationFrame(tick);
+                });
+                pauseBtn.addEventListener("click", () => {
+                    if (raf) cancelAnimationFrame(raf);
+                    raf = null;
+                    lastTick = null;
+                });
+                resetBtn.addEventListener("click", () => {
+                    seconds = focusMin * 60;
+                    total = seconds;
+                    isFocus = true;
+                    updateUI();
+                });
+                updateUI();
+            })();
+        </script>
+    </body>
+</html>

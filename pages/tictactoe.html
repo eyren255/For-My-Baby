@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-kitty">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Cute tic‑tac‑toe with hearts and sparkles." />
+        <meta property="og:title" content="Tic‑tac‑toe Hearts · For My Baby" />
+        <meta property="og:description" content="Play a cute hearts tic‑tac‑toe game." />
+        <meta property="og:type" content="website" />
         <title>Tic‑tac‑toe Hearts · For My Baby</title>
         <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
         <style>
             .board {
                 display: grid;
@@ -42,7 +47,7 @@
     </head>
     <body>
         <header class="site-header">
-            <div class="container row between center">
+            <div class="container wide row between center">
                 <a class="brand" href="../index.html">For My Baby</a>
                 <nav class="nav">
                     <a href="./quiz.html">Love Quiz</a>
@@ -52,16 +57,33 @@
                 </nav>
             </div>
         </header>
-        <main class="container site-grid">
-            <section class="section card span-2">
+        <main class="container wide">
+            <section class="section card">
                 <h1 class="section-title">🎲 Tic‑tac‑toe Hearts</h1>
-                <div id="turn" class="muted">
-                    Turn:
-                    <b>💕</b>
+                <div
+                    class="u-flex u-gap-10 u-wrap"
+                    style="justify-content: center; align-items: center"
+                >
+                    <div id="turn" class="muted">
+                        Turn:
+                        <b>💕</b>
+                    </div>
+                    <label
+                        class="chip"
+                        for="mode"
+                        style="display: inline-flex; gap: 6px; align-items: center"
+                    >
+                        Mode
+                        <select id="mode" class="chip" style="background: #fff; border: none">
+                            <option value="hh">Human vs Human</option>
+                            <option value="ha" selected>Human vs AI (You first)</option>
+                            <option value="ah">AI vs Human (AI first)</option>
+                        </select>
+                    </label>
                 </div>
                 <div id="board" class="board"></div>
                 <div class="meta">
-                    <button id="reset" class="chip">Reset ↺</button>
+                    <button id="reset" class="btn pixel">Reset ↺</button>
                     <span id="status" class="muted"></span>
                 </div>
             </section>
@@ -78,8 +100,66 @@
             const statusEl = document.getElementById("status");
             const turnEl = document.getElementById("turn");
             const reset = document.getElementById("reset");
+            const modeSel = document.getElementById("mode");
             let cells = Array(9).fill("");
             let turn = "💕"; // other: ✨
+            const HUMAN = "💕";
+            const AI = "✨";
+
+            function emptyIndices(b) {
+                const r = [];
+                for (let i = 0; i < 9; i++) if (!b[i]) r.push(i);
+                return r;
+            }
+            function checkWinnerVal(b) {
+                const w = winner(b);
+                if (w === AI) return 1;
+                if (w === HUMAN) return -1;
+                if (emptyIndices(b).length === 0) return 0;
+                return null;
+            }
+            function minimax(b, player) {
+                const res = checkWinnerVal(b);
+                if (res !== null) return { score: res };
+                const moves = [];
+                for (const i of emptyIndices(b)) {
+                    const move = { index: i };
+                    b[i] = player;
+                    const next = player === AI ? minimax(b, HUMAN) : minimax(b, AI);
+                    move.score = next.score;
+                    b[i] = "";
+                    moves.push(move);
+                }
+                if (player === AI) {
+                    let best = -Infinity,
+                        bestMove = 0;
+                    for (let i = 0; i < moves.length; i++)
+                        if (moves[i].score > best) {
+                            best = moves[i].score;
+                            bestMove = i;
+                        }
+                    return moves[bestMove];
+                } else {
+                    let best = Infinity,
+                        bestMove = 0;
+                    for (let i = 0; i < moves.length; i++)
+                        if (moves[i].score < best) {
+                            best = moves[i].score;
+                            bestMove = i;
+                        }
+                    return moves[bestMove];
+                }
+            }
+            function aiMove() {
+                if (winner(cells) || emptyIndices(cells).length === 0) return;
+                const best = minimax(cells.slice(), AI);
+                const idx = best.index;
+                if (idx != null && cells[idx] === "") {
+                    cells[idx] = AI;
+                    turn = HUMAN;
+                    update();
+                }
+            }
             function render() {
                 boardEl.innerHTML = "";
                 cells.forEach((v, i) => {
@@ -89,9 +169,20 @@
                     c.disabled = !!v || winner(cells);
                     c.addEventListener("click", () => {
                         if (cells[i] || winner(cells)) return;
-                        cells[i] = turn;
-                        turn = turn === "💕" ? "✨" : "💕";
-                        update();
+                        if (modeSel.value === "hh") {
+                            cells[i] = turn;
+                            turn = turn === HUMAN ? AI : HUMAN;
+                            update();
+                        } else {
+                            // Human vs AI modes: human is always HUMAN symbol
+                            cells[i] = HUMAN;
+                            turn = AI;
+                            update();
+                            // Delay AI a tick for UX
+                            setTimeout(() => {
+                                if (modeSel.value !== "hh" && !winner(cells)) aiMove();
+                            }, 60);
+                        }
                     });
                     boardEl.appendChild(c);
                 });
@@ -119,10 +210,19 @@
             }
             reset.addEventListener("click", () => {
                 cells = Array(9).fill("");
-                turn = "💕";
+                turn = modeSel.value === "ah" ? AI : HUMAN;
                 update();
+                if (modeSel.value === "ah") setTimeout(aiMove, 80);
+            });
+            modeSel.addEventListener("change", () => {
+                // reset on mode change
+                cells = Array(9).fill("");
+                turn = modeSel.value === "ah" ? AI : HUMAN;
+                update();
+                if (modeSel.value === "ah") setTimeout(aiMove, 80);
             });
             update();
+            if (modeSel.value === "ah") setTimeout(aiMove, 80);
             if ("serviceWorker" in navigator) {
                 window.addEventListener("load", () => {
                     navigator.serviceWorker.register("../sw.js").catch(() => {});

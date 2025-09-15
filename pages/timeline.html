@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-kitty">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,11 +8,12 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -31,48 +32,165 @@
                 border-radius: 14px;
                 padding: 12px;
                 background: #fff;
+                transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease;
             }
             .when {
                 font-weight: 700;
                 color: #d63384;
             }
+            .item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            }
         </style>
     </head>
     <body>
         <header class="site-header">
-            <div class="container row between center">
-                <a class="brand" href="../index.html">For My Baby</a>
+            <div class="container wide row between center">
+                <a class="brand" href="../index.html#hero">For My Baby</a>
                 <nav class="nav">
-                    <a href="./quiz.html">Love Quiz</a>
-                    <a href="./timeline.html" aria-current="page">Timeline</a>
-                    <a href="./polaroid.html">Polaroid Wall</a>
-                    <a href="./tictactoe.html">Tic‑tac‑toe</a>
+                    <a href="../index.html">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎉</span>
+                            <span class="nav-text">Celebrate</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="anniversary.html">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Anniversary</span>
+                            </a>
+                            <a href="cards.html">
+                                <span class="nav-icon">💌</span>
+                                <span class="nav-text">Cards</span>
+                            </a>
+                            <a href="reasons.html">
+                                <span class="nav-icon">💗</span>
+                                <span class="nav-text">Reasons</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">💝</span>
+                            <span class="nav-text">Memories</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="timeline.html" aria-current="page">
+                                <span class="nav-icon">🗓️</span>
+                                <span class="nav-text">Timeline</span>
+                            </a>
+                            <a href="polaroid.html">
+                                <span class="nav-icon">📷</span>
+                                <span class="nav-text">Gallery</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎮</span>
+                            <span class="nav-text">Play</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="quiz.html">
+                                <span class="nav-icon">💘</span>
+                                <span class="nav-text">Love Quiz</span>
+                            </a>
+                            <a href="tictactoe.html">
+                                <span class="nav-icon">❌⭕</span>
+                                <span class="nav-text">Tic‑tac‑toe</span>
+                            </a>
+                        </div>
+                    </details>
+                    <a href="study.html">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Study</span>
+                    </a>
                 </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙</button>
             </div>
         </header>
         <main class="container site-grid">
             <section class="section card span-2">
-                <h1 class="section-title">🗓️ Memory Timeline</h1>
-                <div class="editor">
-                    <input id="date" class="chip" type="date" aria-label="Date" />
-                    <input
-                        id="emoji"
-                        class="chip"
-                        placeholder="Emoji (e.g. 💖)"
-                        aria-label="Emoji"
-                    />
-                    <input
-                        id="text"
-                        class="chip"
-                        placeholder="Write a sweet memory..."
-                        aria-label="Memory text"
-                    />
-                    <div>
-                        <button id="add" class="chip">Add</button>
-                        <button id="clear" class="chip">Clear all</button>
+                <h1 class="section-title">🗓️ Memories</h1>
+                <div role="tablist" aria-label="Memories tabs">
+                    <button
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="panel-time"
+                        id="tab-time"
+                    >
+                        Time Together
+                    </button>
+                    <button
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="panel-timeline"
+                        id="tab-timeline"
+                    >
+                        Timeline
+                    </button>
+                    <button
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="panel-chat"
+                        id="tab-chat"
+                    >
+                        Chat Analysis
+                    </button>
+                </div>
+
+                <div id="panel-time" role="tabpanel" tabindex="0">
+                    <div class="stat">
+                        <div class="stat-number" id="daysTogetherLocal">0</div>
+                        <div class="stat-label">Days together</div>
+                    </div>
+                    <p class="muted">
+                        Next anniversary in
+                        <strong>
+                            <span id="daysToAnnivLocal">0</span>
+                            days
+                        </strong>
+                    </p>
+                    <h3 class="section-title">📌 Upcoming Plans</h3>
+                    <ul class="timeline-preview">
+                        <li>✈️ Trip idea — Beach weekend escape</li>
+                        <li>🎂 Birthday surprise — Cake + picnic</li>
+                        <li>🌳 Nature day — Park walk and photos</li>
+                    </ul>
+                </div>
+
+                <div id="panel-timeline" role="tabpanel" tabindex="0" hidden>
+                    <div class="editor">
+                        <input id="date" class="chip" type="date" aria-label="Date" />
+                        <input
+                            id="emoji"
+                            class="chip"
+                            placeholder="Emoji (e.g. 💖)"
+                            aria-label="Emoji"
+                        />
+                        <input
+                            id="text"
+                            class="chip"
+                            placeholder="Write a sweet memory..."
+                            aria-label="Memory text"
+                        />
+                        <div>
+                            <button id="add" class="chip">Add</button>
+                            <button id="clear" class="chip">Clear all</button>
+                        </div>
+                    </div>
+                    <div id="timeline" class="timeline timeline-scroll"></div>
+                </div>
+
+                <div id="panel-chat" role="tabpanel" tabindex="0" hidden>
+                    <div class="prose muted">
+                        Connect chat stats here later. Placeholder section.
                     </div>
                 </div>
-                <div id="timeline" class="timeline"></div>
             </section>
         </main>
         <footer class="site-footer">
@@ -83,17 +201,68 @@
         </footer>
         <script>
             document.getElementById("year").textContent = new Date().getFullYear();
+            // Local time together (mirrors home logic)
+            (function () {
+                const startDateStr = "2025-09-13";
+                const start = new Date(startDateStr + "T00:00:00");
+                const daysEl = document.getElementById("daysTogetherLocal");
+                const annivEl = document.getElementById("daysToAnnivLocal");
+                if (isNaN(start.getTime())) return;
+                function animateCount(el, to, duration = 1200) {
+                    if (!el) return;
+                    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+                    if (media.matches) {
+                        el.textContent = String(Math.max(0, Math.floor(to)));
+                        return;
+                    }
+                    const from = 0;
+                    const startTime = performance.now();
+                    function frame(now) {
+                        const t = Math.min(1, (now - startTime) / duration);
+                        const eased = 1 - Math.pow(1 - t, 3);
+                        const val = Math.round(from + (to - from) * eased);
+                        el.textContent = String(val);
+                        if (t < 1) requestAnimationFrame(frame);
+                    }
+                    requestAnimationFrame(frame);
+                }
+                const today = new Date();
+                const diffMs = today.setHours(0, 0, 0, 0) - start.setHours(0, 0, 0, 0);
+                const days = Math.max(0, Math.floor(diffMs / 86400000));
+                if (daysEl) animateCount(daysEl, days);
+                const year = today.getFullYear();
+                const m = (start.getMonth() + 1).toString().padStart(2, "0");
+                const d = start.getDate().toString().padStart(2, "0");
+                const thisAnniv = new Date(`${year}-${m}-${d}T00:00:00`);
+                const nextAnniv =
+                    thisAnniv >= new Date(today.toDateString())
+                        ? thisAnniv
+                        : new Date(`${year + 1}-${m}-${d}T00:00:00`);
+                const daysTo = Math.ceil((nextAnniv - new Date()) / 86400000);
+                if (annivEl) animateCount(annivEl, Math.max(0, daysTo), 900);
+            })();
             const tl = document.getElementById("timeline");
             function renderFrom(list) {
                 tl.innerHTML = "";
                 list.sort((a, b) => a.date.localeCompare(b.date));
-                list.forEach((it) => {
+                let delay = 0;
+                list.forEach((it, idx) => {
                     const d = document.createElement("div");
-                    d.className = "item";
+                    d.className = "item reveal";
                     d.innerHTML = `<div class="when">${it.emoji || "💖"} ${
                         it.date
                     }</div><div class="prose">${it.text}</div>`;
+                    d.style.transitionDelay = Math.min(delay, 240) + "ms";
+                    delay += 60;
                     tl.appendChild(d);
+                    // Stagger in
+                    requestAnimationFrame(() => {
+                        d.classList.add("in");
+                        // cleanup inline delay after transition completes
+                        d.addEventListener("transitionend", () => (d.style.transitionDelay = ""), {
+                            once: true
+                        });
+                    });
                 });
             }
 
@@ -111,17 +280,10 @@
             const db = firebase.firestore();
             const auth = firebase.auth();
 
-            // optional shared code for cross-device sync
-            const ROOM_KEY = "shareRoom";
-            function getRoom() {
-                return (localStorage.getItem(ROOM_KEY) || "").trim();
-            }
             auth.signInAnonymously().then(() => {
                 const uid = auth.currentUser.uid;
-                const room = getRoom();
-                // Subscribe real-time (room if set, else user)
-                let q = db.collection("timeline");
-                q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
+                // Subscribe real-time (per-user)
+                let q = db.collection("timeline").where("user", "==", uid);
                 q.onSnapshot((snap) => {
                     const list = [];
                     snap.forEach((doc) => list.push(doc.data()));
@@ -138,7 +300,6 @@
                     if (!text) return;
                     await db.collection("timeline").add({
                         user: uid,
-                        room: getRoom() || null,
                         date,
                         emoji,
                         text,
@@ -150,9 +311,7 @@
                 // Clear all
                 document.getElementById("clear").addEventListener("click", async () => {
                     if (!confirm("Clear all memories?")) return;
-                    const room = getRoom();
-                    let q = db.collection("timeline");
-                    q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
+                    let q = db.collection("timeline").where("user", "==", uid);
                     const snap = await q.get();
                     const batch = db.batch();
                     snap.forEach((doc) => batch.delete(doc.ref));

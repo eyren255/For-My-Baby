@@ -1,52 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-kitty">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Lovely pixel cards with sweet messages and quotes." />
+        <meta property="og:title" content="Cards · For My Baby" />
+        <meta property="og:description" content="Cute messages and quotes collected for you." />
+        <meta property="og:type" content="website" />
         <title>Cards · For My Baby</title>
         <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
     </head>
     <body>
         <header class="site-header">
-            <div class="container row between center">
-                <a class="brand" href="../index.html">For My Baby</a>
+            <div class="container wide row between center">
+                <a class="brand" href="../index.html#hero">For My Baby</a>
                 <nav class="nav">
-                    <a href="../index.html">Home</a>
-                    <a href="./anniversary.html">Anniversary</a>
-                    <a href="./reasons.html">Reasons</a>
-                    <a href="./cards.html" aria-current="page">Cards</a>
+                    <a href="../index.html">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎉</span>
+                            <span class="nav-text">Celebrate</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="anniversary.html">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Anniversary</span>
+                            </a>
+                            <a href="cards.html" aria-current="page">
+                                <span class="nav-icon">💌</span>
+                                <span class="nav-text">Cards</span>
+                            </a>
+                            <a href="reasons.html">
+                                <span class="nav-icon">💗</span>
+                                <span class="nav-text">Reasons</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">💝</span>
+                            <span class="nav-text">Memories</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="timeline.html">
+                                <span class="nav-icon">🗓️</span>
+                                <span class="nav-text">Timeline</span>
+                            </a>
+                            <a href="polaroid.html">
+                                <span class="nav-icon">📷</span>
+                                <span class="nav-text">Gallery</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎮</span>
+                            <span class="nav-text">Play</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="quiz.html">
+                                <span class="nav-icon">💘</span>
+                                <span class="nav-text">Love Quiz</span>
+                            </a>
+                            <a href="tictactoe.html">
+                                <span class="nav-icon">❌⭕</span>
+                                <span class="nav-text">Tic‑tac‑toe</span>
+                            </a>
+                        </div>
+                    </details>
+                    <a href="study.html">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Study</span>
+                    </a>
                 </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙</button>
             </div>
         </header>
-        <main class="container site-grid">
-            <section class="section card span-2">
+        <main class="container wide">
+            <section class="section card">
                 <h1 class="section-title">💌 Lovely Cards</h1>
-                <div
-                    class="grid"
-                    style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px"
-                >
-                    <div class="lovely-card section">
-                        <h3 class="title-script" style="margin: 0 0 10px 0">Sweet Message</h3>
-                        <p class="prose">
-                            Every day with you is a beautiful adventure filled with love, laughter,
-                            and countless precious moments. You make everything better just by being
-                            you! 💕
-                        </p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="icon">💌</div>
+                        <div class="title">Sweet Message</div>
+                        <div class="muted">
+                            Every day with you is a beautiful adventure filled with love and
+                            laughter.
+                        </div>
                     </div>
-                    <div class="lovely-card section">
-                        <h3 class="title-script" style="margin: 0 0 10px 0">Romantic Quote</h3>
-                        <p class="prose">
-                            "In all the world, there is no heart for me like yours. In all the
-                            world, there is no love for you like mine." — Maya Angelou
-                        </p>
+                    <div class="feature-card">
+                        <div class="icon">📜</div>
+                        <div class="title">Romantic Quote</div>
+                        <div class="muted">
+                            “In all the world, there is no heart for me like yours.”
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🌙</div>
+                        <div class="title">Good Night</div>
+                        <div class="muted">Sleep well, my love. I’m grateful for you—always.</div>
                     </div>
                 </div>
             </section>

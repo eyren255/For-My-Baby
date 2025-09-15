@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-kitty">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Play the love quiz and save your best score." />
+        <meta property="og:title" content="Love Quiz · For My Baby" />
+        <meta property="og:description" content="Fun questions about us with a saved best score." />
+        <meta property="og:type" content="website" />
         <title>Love Quiz · For My Baby</title>
         <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -35,13 +40,6 @@
                 gap: 8px;
                 margin-top: 10px;
             }
-            .btn {
-                padding: 8px 12px;
-                border: 1px solid var(--border);
-                border-radius: 12px;
-                background: #fff;
-                cursor: pointer;
-            }
             .score {
                 font-weight: 700;
                 color: #d63384;
@@ -50,24 +48,81 @@
     </head>
     <body>
         <header class="site-header">
-            <div class="container row between center">
-                <a class="brand" href="../index.html">For My Baby</a>
+            <div class="container wide row between center">
+                <a class="brand" href="../index.html#hero">For My Baby</a>
                 <nav class="nav">
-                    <a href="./quiz.html" aria-current="page">Love Quiz</a>
-                    <a href="./timeline.html">Timeline</a>
-                    <a href="./polaroid.html">Polaroid Wall</a>
-                    <a href="./tictactoe.html">Tic‑tac‑toe</a>
+                    <a href="../index.html">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎉</span>
+                            <span class="nav-text">Celebrate</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="anniversary.html">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Anniversary</span>
+                            </a>
+                            <a href="cards.html">
+                                <span class="nav-icon">💌</span>
+                                <span class="nav-text">Cards</span>
+                            </a>
+                            <a href="reasons.html">
+                                <span class="nav-icon">💗</span>
+                                <span class="nav-text">Reasons</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">💝</span>
+                            <span class="nav-text">Memories</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="timeline.html">
+                                <span class="nav-icon">🗓️</span>
+                                <span class="nav-text">Timeline</span>
+                            </a>
+                            <a href="polaroid.html">
+                                <span class="nav-icon">📷</span>
+                                <span class="nav-text">Gallery</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎮</span>
+                            <span class="nav-text">Play</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="quiz.html" aria-current="page">
+                                <span class="nav-icon">💘</span>
+                                <span class="nav-text">Love Quiz</span>
+                            </a>
+                            <a href="tictactoe.html">
+                                <span class="nav-icon">❌⭕</span>
+                                <span class="nav-text">Tic‑tac‑toe</span>
+                            </a>
+                        </div>
+                    </details>
+                    <a href="study.html">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Study</span>
+                    </a>
                 </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙</button>
             </div>
         </header>
-        <main class="container site-grid">
-            <section class="section card span-2">
+        <main class="container wide">
+            <section class="section card">
                 <h1 class="section-title">💞 Love Quiz</h1>
                 <p class="muted">Answer together! Your best score is saved on this device.</p>
                 <div class="quiz" id="quiz"></div>
                 <div class="actions">
-                    <button id="submit" class="btn">Submit ✨</button>
-                    <button id="reset" class="btn">Reset ↺</button>
+                    <button id="submit" class="btn primary pixel">Submit ✨</button>
+                    <button id="reset" class="btn pixel">Reset ↺</button>
                 </div>
                 <p>
                     Score:
@@ -95,7 +150,9 @@
                 appId: "1:177238221787:web:b3e01b5de50f1da7347dfe",
                 measurementId: "G-TJ3DMJVFG9"
             };
-            try { firebase.initializeApp(firebaseConfig); } catch (e) {}
+            try {
+                firebase.initializeApp(firebaseConfig);
+            } catch (e) {}
             const db = firebase.firestore();
             const auth = firebase.auth();
             const QUESTIONS = [
@@ -135,14 +192,14 @@
             auth.signInAnonymously().then(async () => {
                 const uid = auth.currentUser.uid;
                 try {
-                    const doc = await db.collection('quizBest').doc(uid).get();
-                    if (doc.exists && typeof doc.data().best === 'number') {
+                    const doc = await db.collection("quizBest").doc(uid).get();
+                    if (doc.exists && typeof doc.data().best === "number") {
                         bestEl.textContent = String(doc.data().best);
                     } else {
-                        bestEl.textContent = localStorage.getItem('loveQuizBest') || '0';
+                        bestEl.textContent = localStorage.getItem("loveQuizBest") || "0";
                     }
                 } catch {
-                    bestEl.textContent = localStorage.getItem('loveQuizBest') || '0';
+                    bestEl.textContent = localStorage.getItem("loveQuizBest") || "0";
                 }
 
                 submit.addEventListener("click", async () => {
@@ -152,11 +209,13 @@
                         if (checked && Number(checked.value) === q.a) s++;
                     });
                     scoreEl.textContent = String(s);
-                    const currentBest = Number(bestEl.textContent || '0');
+                    const currentBest = Number(bestEl.textContent || "0");
                     const best = Math.max(s, currentBest);
                     bestEl.textContent = String(best);
                     localStorage.setItem("loveQuizBest", String(best));
-                    try { await db.collection('quizBest').doc(uid).set({ best }, { merge: true }); } catch {}
+                    try {
+                        await db.collection("quizBest").doc(uid).set({ best }, { merge: true });
+                    } catch {}
                 });
             });
             reset.addEventListener("click", () => {

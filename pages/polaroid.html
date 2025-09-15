@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-kitty">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,11 +8,12 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Press+Start+2P&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
         <link rel="manifest" href="../site.webmanifest" />
+        <script defer src="../app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -36,6 +37,7 @@
                 border-radius: 8px;
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
                 will-change: left, top;
+                transition: transform 0.25s ease, box-shadow 0.25s ease;
             }
             .pol img {
                 width: 100%;
@@ -53,38 +55,102 @@
                 gap: 8px;
                 margin: 10px 0;
             }
+            .pol:hover {
+                transform: translateY(-2px) rotate(var(--tilt, 1.5deg));
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+            }
+            @keyframes softBounce {
+                0% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-6px);
+                }
+                60% {
+                    transform: translateY(2px);
+                }
+                100% {
+                    transform: translateY(0);
+                }
+            }
+            .pol.bounce {
+                animation: softBounce 400ms ease;
+            }
         </style>
     </head>
     <body>
         <header class="site-header">
-            <div class="container row between center">
-                <a class="brand" href="../index.html">For My Baby</a>
+            <div class="container wide row between center">
+                <a class="brand" href="../index.html#hero">For My Baby</a>
                 <nav class="nav">
-                    <a href="./quiz.html">Love Quiz</a>
-                    <a href="./timeline.html">Timeline</a>
-                    <a href="./polaroid.html" aria-current="page">Polaroid Wall</a>
-                    <a href="./tictactoe.html">Tic‑tac‑toe</a>
+                    <a href="../index.html">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </a>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎉</span>
+                            <span class="nav-text">Celebrate</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="anniversary.html">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Anniversary</span>
+                            </a>
+                            <a href="cards.html">
+                                <span class="nav-icon">💌</span>
+                                <span class="nav-text">Cards</span>
+                            </a>
+                            <a href="reasons.html">
+                                <span class="nav-icon">💗</span>
+                                <span class="nav-text">Reasons</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">💝</span>
+                            <span class="nav-text">Memories</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="timeline.html">
+                                <span class="nav-icon">🗓️</span>
+                                <span class="nav-text">Timeline</span>
+                            </a>
+                            <a href="polaroid.html" aria-current="page">
+                                <span class="nav-icon">📷</span>
+                                <span class="nav-text">Gallery</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="menu">
+                        <summary class="chip">
+                            <span class="nav-icon">🎮</span>
+                            <span class="nav-text">Play</span>
+                        </summary>
+                        <div class="menu-list card">
+                            <a href="quiz.html">
+                                <span class="nav-icon">💘</span>
+                                <span class="nav-text">Love Quiz</span>
+                            </a>
+                            <a href="tictactoe.html">
+                                <span class="nav-icon">❌⭕</span>
+                                <span class="nav-text">Tic‑tac‑toe</span>
+                            </a>
+                        </div>
+                    </details>
+                    <a href="study.html">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Study</span>
+                    </a>
                 </nav>
+                <button id="themeToggle" class="chip" aria-label="Toggle theme">🌙</button>
             </div>
         </header>
         <main class="container site-grid">
             <section class="section card span-2">
                 <h1 class="section-title">📷 Polaroid Wall</h1>
-                <div
-                    class="controls"
-                    style="display: flex; gap: 8px; align-items: center; margin: 8px 0 10px 0"
-                >
-                    <input
-                        id="room"
-                        class="chip"
-                        placeholder="Shared code (optional)"
-                        aria-label="Shared code"
-                    />
-                    <button id="setRoom" class="chip">Set code</button>
-                    <span class="muted" style="font-size: 12px">
-                        Use the same code on other devices to sync.
-                    </span>
-                </div>
+
                 <div class="controls">
                     <input id="file" type="file" accept="image/*" />
                     <input id="cap" class="chip" placeholder="Caption" />
@@ -117,20 +183,6 @@
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore();
             const auth = firebase.auth();
-
-            // Shared code helpers
-            const ROOM_KEY = "shareRoom";
-            function getRoom() {
-                return (localStorage.getItem(ROOM_KEY) || "").trim();
-            }
-            function setRoom(v) {
-                localStorage.setItem(ROOM_KEY, (v || "").trim());
-            }
-            document.getElementById("setRoom").addEventListener("click", () => {
-                setRoom(document.getElementById("room").value);
-                location.reload();
-            });
-            document.getElementById("room").value = getRoom();
 
             function renderDocs(snap) {
                 board.innerHTML = "";
@@ -197,16 +249,19 @@
                     if (typeof onmove === "function") onmove(fx, fy);
                     sx = sy = lastX = lastY = pointerId = null;
                     el.style.cursor = "grab";
+                    // Soft bounce feedback
+                    el.classList.add("bounce");
+                    el.addEventListener("animationend", () => el.classList.remove("bounce"), {
+                        once: true
+                    });
                 };
                 el.addEventListener("pointerup", end);
                 el.addEventListener("pointercancel", end);
             }
             auth.signInAnonymously().then(() => {
                 const uid = auth.currentUser.uid;
-                const room = getRoom();
-                // realtime
-                let q = db.collection("polaroids");
-                q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
+                // realtime (per-user)
+                let q = db.collection("polaroids").where("user", "==", uid);
                 q.onSnapshot(renderDocs);
 
                 // add
@@ -217,7 +272,6 @@
                     reader.onload = () => {
                         db.collection("polaroids").add({
                             user: uid,
-                            room: getRoom() || null,
                             src: reader.result,
                             cap: document.getElementById("cap").value,
                             x: 10,
@@ -232,9 +286,7 @@
                 // clear
                 document.getElementById("clear").addEventListener("click", async () => {
                     if (!confirm("Clear all photos?")) return;
-                    const room = getRoom();
-                    let q = db.collection("polaroids");
-                    q = room ? q.where("room", "==", room) : q.where("user", "==", uid);
+                    let q = db.collection("polaroids").where("user", "==", uid);
                     const snap = await q.get();
                     const batch = db.batch();
                     snap.forEach((doc) => batch.delete(doc.ref));
