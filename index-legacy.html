@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>💕 Cute & Lovely Theme 💕</title>
+        <meta name="title" content="Cute & Lovely Theme" />
+        <meta
+            name="description"
+            content="A sweet, romantic HTML/CSS theme with soft pastels, adorable animations, and lovely UI components for someone special."
+        />
+        <meta name="theme-color" content="#ffb3d1" />
+        <meta name="author" content="For My Baby" />
+        <meta
+            name="keywords"
+            content="cute, lovely, romantic, pastel, pink, hearts, theme, css, html"
+        />
+        <meta property="og:title" content="Cute & Lovely Theme" />
+        <meta
+            property="og:description"
+            content="Adorable colors, hearts, sparkles, and a lovely vibe—made with love."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="og-image.svg" />
+        <link rel="canonical" href="https://eyren255.github.io/For-My-Baby/" />
+        <meta property="og:url" content="https://eyren255.github.io/For-My-Baby/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Cute & Lovely Theme" />
+        <meta
+            name="twitter:description"
+            content="Adorable colors, hearts, sparkles, and a lovely vibe—made with love."
+        />
+        <meta name="twitter:image" content="og-image.svg" />
+        <link rel="manifest" href="site.webmanifest" />
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="cute-lovely-theme.css" />
+        <style>
+            body {
+                margin: 0;
+                padding: 16px;
+                background: var(--gradient-dream);
+                min-height: 100vh;
+                font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            /* Cute top navigation */
+            .cute-nav {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                backdrop-filter: blur(6px);
+                background: rgba(255, 240, 245, 0.7);
+                border: 1px solid var(--border-subtle);
+                border-radius: 16px;
+                margin: 10px auto 20px auto;
+                max-width: 1200px;
+                padding: 10px 16px;
+                box-shadow: 0 6px 18px var(--shadow-gentle);
+            }
+            .cute-nav .nav-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .cute-nav .nav-links {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .cute-nav a {
+                text-decoration: none;
+            }
+
+            .container {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 16px;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            @media (min-width: 900px) {
+                .container {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 20px;
+                }
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 36px;
+                padding: 28px;
+                background: var(--gradient-sunset);
+                border-radius: 25px;
+                box-shadow: 0 8px 24px var(--shadow-pink);
+                grid-column: 1 / -1;
+            }
+
+            .color-palette {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+                margin: 30px 0;
+            }
+
+            .color-card {
+                background: var(--neutral-white);
+                border-radius: 15px;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 5px 15px var(--shadow-gentle);
+                transition: transform 0.3s ease;
+            }
+
+            .color-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .color-swatch {
+                width: 100%;
+                height: 80px;
+                border-radius: 10px;
+                margin-bottom: 15px;
+                border: 2px solid var(--border-subtle);
+            }
+
+            .demo-section {
+                margin: 0;
+                padding: 28px;
+                background: var(--gradient-romance);
+                border-radius: 20px;
+                box-shadow: 0 6px 20px var(--shadow-soft);
+            }
+
+            .button-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin: 16px 0;
+            }
+
+            .input-group {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .input-group input,
+            .input-group textarea {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .icon-showcase {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px;
+                justify-content: center;
+                margin: 16px 0;
+                font-size: 2em;
+            }
+
+            .special-effects {
+                text-align: center;
+                margin: 30px 0;
+            }
+
+            /* Button sizing + Active nav link */
+            .cute-button {
+                padding: 10px 18px;
+                border-radius: 22px;
+                font-size: 0.95em;
+            }
+            /* Active nav link */
+            .cute-nav .nav-links a.active {
+                outline: 2px solid var(--border-soft);
+                background: var(--accent-cotton);
+            }
+
+            /* Tabs */
+            .tabs {
+                grid-column: 1 / -1;
+                background: var(--neutral-white);
+                border-radius: 18px;
+                box-shadow: 0 6px 20px var(--shadow-soft);
+                padding: 10px;
+            }
+            .tab-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin: 0 0 10px 0;
+                padding: 0;
+                list-style: none;
+            }
+            .tab-list .tab {
+                cursor: pointer;
+            }
+            .tab-panel {
+                display: none;
+            }
+            .tab-panel.active {
+                display: block;
+                animation: fadeUp 0.25s ease both;
+            }
+            .is-hidden {
+                display: none;
+            }
+
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Reduced motion preference */
+            @media (prefers-reduced-motion: reduce) {
+                .rainbow-text {
+                    animation: none !important;
+                }
+                .heart,
+                .sparkle {
+                    animation: none !important;
+                }
+                .tab-panel.active {
+                    animation: none !important;
+                }
+            }
+
+            /* Back to top button */
+            #backToTop {
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 1000;
+                display: none;
+            }
+
+            /* Floating hearts container */
+            .hearts-container {
+                pointer-events: none;
+                position: fixed;
+                inset: 0;
+                overflow: hidden;
+                z-index: 500;
+            }
+
+            /* Surprise modal */
+            .modal-backdrop {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.25);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 1200;
+            }
+            .modal {
+                background: var(--neutral-white);
+                border: 1px solid var(--border-subtle);
+                border-radius: 20px;
+                padding: 24px;
+                max-width: 560px;
+                margin: 16px;
+                box-shadow: 0 12px 36px var(--shadow-soft);
+                text-align: center;
+            }
+            .modal .close-row {
+                display: flex;
+                justify-content: flex-end;
+            }
+            .modal .close-btn {
+                background: var(--accent-cream);
+                border: 1px solid var(--border-light);
+                border-radius: 12px;
+                padding: 6px 10px;
+                cursor: pointer;
+            }
+            .days-counter {
+                color: var(--text-accent);
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="hearts-container" aria-hidden="true"></div>
+        <nav class="cute-nav" aria-label="Primary">
+            <div class="nav-row">
+                <div class="lovely-subtitle" style="margin: 0">
+                    💞 For My Baby — Days together:
+                    <span id="daysTogether" class="days-counter">0</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#hero" class="cute-button" style="padding: 6px 14px">Home</a>
+                    <a href="#anniversary" class="cute-button" style="padding: 6px 14px">
+                        Anniversary
+                    </a>
+                    <a href="#reasons" class="cute-button" style="padding: 6px 14px">Reasons</a>
+                    <a href="#gallery" class="cute-button" style="padding: 6px 14px">Gallery</a>
+                    <a href="#cards" class="cute-button" style="padding: 6px 14px">Cards</a>
+                    <button id="openSurprise" class="cute-button" style="padding: 6px 14px">
+                        Surprise 💌
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <h1 class="cute-title rainbow-text">💕 Made with Love 💕</h1>
+                <p class="lovely-subtitle">A cute and lovely color theme for someone special</p>
+                <div class="icon-showcase">
+                    <span class="cute-icon">🌸</span>
+                    <span class="heart">❤️</span>
+                    <span class="sparkle">✨</span>
+                    <span class="cute-icon">🦄</span>
+                    <span class="heart">💖</span>
+                    <span class="sparkle">🌟</span>
+                </div>
+            </div>
+
+            <!-- Personalized Hero -->
+            <section id="hero" class="demo-section" aria-label="Hero" style="grid-column: 1 / -1">
+                <h2 class="cute-title" style="font-size: 2.2em; text-align: center; margin-top: 0">
+                    For
+                    <span id="heroNameA">Shin Myat Tun</span>
+                    ❤
+                    <span id="heroNameB">Ei Myat Thin Za</span>
+                </h2>
+                <p class="sweet-text" style="text-align: center">
+                    Together is my favorite place to be.
+                </p>
+                <div class="icon-showcase" style="font-size: 2.2em">
+                    <span class="heart">💖</span>
+                    <span class="sparkle">✨</span>
+                    <span class="heart">💕</span>
+                </div>
+            </section>
+
+            <!-- Tabs: Anniversary | Reasons | Cards -->
+            <section class="tabs" aria-label="Sections">
+                <ul class="tab-list" role="tablist">
+                    <li>
+                        <button
+                            class="cute-button tab"
+                            role="tab"
+                            aria-controls="tab-anniv"
+                            aria-selected="true"
+                        >
+                            Anniversary
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            class="cute-button tab"
+                            role="tab"
+                            aria-controls="tab-reasons"
+                            aria-selected="false"
+                        >
+                            Reasons
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            class="cute-button tab"
+                            role="tab"
+                            aria-controls="tab-cards"
+                            aria-selected="false"
+                        >
+                            Cards
+                        </button>
+                    </li>
+                </ul>
+                <div id="tab-anniv" class="tab-panel active" role="tabpanel">
+                    <div id="anniversary" class="demo-section" aria-live="polite" style="margin: 0">
+                        <h2 class="lovely-subtitle">📅 Anniversary Countdown</h2>
+                        <p class="sweet-text">
+                            Next anniversary in
+                            <strong>
+                                <span id="daysToAnniv">0</span>
+                                days
+                            </strong>
+                            🎉
+                        </p>
+                        <p class="sweet-text">
+                            Milestone:
+                            <span id="nextMilestone">1 year</span>
+                        </p>
+                    </div>
+                </div>
+                <div id="tab-reasons" class="tab-panel" role="tabpanel">
+                    <div id="reasons" class="demo-section" style="margin: 0">
+                        <h2 class="lovely-subtitle">💗 Reasons I Love You</h2>
+                        <ul
+                            id="reasonsList"
+                            class="sweet-text"
+                            style="list-style: none; padding: 0; margin: 0"
+                        >
+                            <li>You're my safe place and my adventure</li>
+                            <li>Your smile brightens my whole day</li>
+                            <li>You care in a million tiny ways</li>
+                            <li>We laugh at the same silly things</li>
+                            <li>You make love feel easy and true</li>
+                        </ul>
+                        <div class="icon-showcase" style="margin-top: 10px">
+                            <button
+                                id="prevReason"
+                                class="cute-button"
+                                aria-label="Previous reason"
+                            >
+                                ◀
+                            </button>
+                            <button id="nextReason" class="cute-button" aria-label="Next reason">
+                                ▶
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-cards" class="tab-panel" role="tabpanel">
+                    <div class="demo-section" style="margin: 0">
+                        <h2 class="lovely-subtitle">💌 Lovely Cards</h2>
+                        <div
+                            style="
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                                gap: 20px;
+                            "
+                        >
+                            <div class="lovely-card">
+                                <h3 class="cute-title" style="font-size: 1.5em; margin: 0 0 15px 0">
+                                    Sweet Message
+                                </h3>
+                                <p class="sweet-text">
+                                    Every day with you is a beautiful adventure filled with love,
+                                    laughter, and countless precious moments. You make everything
+                                    better just by being you! 💕
+                                </p>
+                                <div class="icon-showcase" style="font-size: 1.5em; margin: 15px 0">
+                                    <span class="heart">💖</span>
+                                    <span class="sparkle">✨</span>
+                                    <span class="heart">💕</span>
+                                </div>
+                            </div>
+                            <div class="lovely-card">
+                                <h3 class="cute-title" style="font-size: 1.5em; margin: 0 0 15px 0">
+                                    Romantic Quote
+                                </h3>
+                                <p class="sweet-text">
+                                    "In all the world, there is no heart for me like yours. In all
+                                    the world, there is no love for you like mine." - Maya Angelou
+                                </p>
+                                <div class="icon-showcase" style="font-size: 1.5em; margin: 15px 0">
+                                    <span class="cute-icon">🌹</span>
+                                    <span class="heart">💝</span>
+                                    <span class="cute-icon">🦋</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery -->
+            <div id="gallery" class="demo-section" style="grid-column: 1 / -1">
+                <h2 class="lovely-subtitle">📸 Our Memories</h2>
+                <p class="sweet-text">Add your photos to make this section truly yours.</p>
+                <div
+                    style="
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                        gap: 14px;
+                    "
+                >
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love1/600/400"
+                        alt="Memory 1"
+                        style="cursor: pointer; padding: 0"
+                    />
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love2/600/400"
+                        alt="Memory 2"
+                        style="cursor: pointer; padding: 0"
+                    />
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love3/600/400"
+                        alt="Memory 3"
+                        style="cursor: pointer; padding: 0"
+                    />
+                    <img
+                        class="lovely-card"
+                        src="https://picsum.photos/seed/love4/600/400"
+                        alt="Memory 4"
+                        style="cursor: pointer; padding: 0"
+                    />
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="lovely-card" style="text-align: center; margin-top: 40px">
+                <h3 class="cute-title" style="font-size: 1.8em; margin: 0 0 15px 0">
+                    Made with 💕 for Someone Special
+                </h3>
+                <p class="sweet-text">
+                    This color theme was created with love and care, featuring soft pastels,
+                    romantic pinks, and adorable animations that will make any project feel extra
+                    special!
+                </p>
+                <div class="icon-showcase" style="font-size: 2em; margin: 20px 0">
+                    <span class="heart">💕</span>
+                    <span class="sparkle">✨</span>
+                    <span class="cute-icon">🌸</span>
+                    <span class="heart">💖</span>
+                    <span class="sparkle">🌟</span>
+                    <span class="cute-icon">🦄</span>
+                </div>
+            </div>
+        </div>
+        <button id="backToTop" class="cute-button" title="Back to top">⬆️ Top</button>
+
+        <!-- Surprise Modal -->
+        <div
+            id="surpriseBackdrop"
+            class="modal-backdrop"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
+            <div class="modal">
+                <div class="close-row">
+                    <button id="closeSurprise" class="close-btn">✖</button>
+                </div>
+                <h2 class="cute-title" style="margin-top: 0">For You 💖</h2>
+                <p class="sweet-text">
+                    Every second with you is precious. Thank you for being my favorite person.
+                    You're the sparkle in my day and the calm in my night. I love you endlessly. 💕
+                </p>
+                <div class="icon-showcase" style="font-size: 2em; margin-top: 10px">
+                    <span class="heart">💖</span>
+                    <span class="sparkle">✨</span>
+                    <span class="heart">💕</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal for Gallery -->
+        <div id="lightbox" class="modal-backdrop" aria-hidden="true">
+            <div class="modal" style="max-width: 900px">
+                <div class="close-row">
+                    <button id="closeLightbox" class="close-btn">✖</button>
+                </div>
+                <img id="lightboxImg" src="" alt="Photo" style="width: 100%; border-radius: 12px" />
+                <p
+                    id="lightboxCaption"
+                    class="sweet-text"
+                    style="margin-top: 10px; text-align: center"
+                ></p>
+            </div>
+        </div>
+
+        <!-- Anniversary + Reasons + Contact -->
+        <div id="anniversary" class="demo-section" aria-live="polite">
+            <h2 class="lovely-subtitle">📅 Anniversary Countdown</h2>
+            <p class="sweet-text">
+                Next anniversary in
+                <strong>
+                    <span id="daysToAnniv">0</span>
+                    days
+                </strong>
+                🎉
+            </p>
+            <p class="sweet-text">
+                Milestone:
+                <span id="nextMilestone">1 year</span>
+            </p>
+        </div>
+
+        <div id="reasons" class="demo-section">
+            <h2 class="lovely-subtitle">💗 Reasons I Love You</h2>
+            <ul id="reasonsList" class="sweet-text" style="list-style: none; padding: 0; margin: 0">
+                <li>You're my safe place and my adventure</li>
+                <li>Your smile brightens my whole day</li>
+                <li>You care in a million tiny ways</li>
+                <li>We laugh at the same silly things</li>
+                <li>You make love feel easy and true</li>
+            </ul>
+            <div class="icon-showcase" style="margin-top: 10px">
+                <button id="prevReason" class="cute-button" aria-label="Previous reason">◀</button>
+                <button id="nextReason" class="cute-button" aria-label="Next reason">▶</button>
+            </div>
+        </div>
+
+        <div id="contact" class="demo-section">
+            <h2 class="lovely-subtitle">📬 Send a Message</h2>
+            <p class="sweet-text">
+                Contact form skipped as requested. You can add it later anytime.
+            </p>
+        </div>
+
+        <script>
+            // Tabs logic (click + keyboard)
+            (function () {
+                const tabs = Array.from(document.querySelectorAll(".tabs .tab"));
+                const panels = {
+                    anniv: document.getElementById("tab-anniv"),
+                    reasons: document.getElementById("tab-reasons"),
+                    cards: document.getElementById("tab-cards")
+                };
+                function activate(btn) {
+                    tabs.forEach((t) => t.setAttribute("aria-selected", "false"));
+                    btn.setAttribute("aria-selected", "true");
+                    Object.values(panels).forEach((p) => p.classList.remove("active"));
+                    const id = btn.getAttribute("aria-controls");
+                    const panel = document.getElementById(id);
+                    panel?.classList.add("active");
+                }
+                tabs.forEach((t, i) => {
+                    t.addEventListener("click", () => activate(t));
+                    t.addEventListener("keydown", (e) => {
+                        if (e.key === "ArrowRight") tabs[(i + 1) % tabs.length].focus();
+                        if (e.key === "ArrowLeft")
+                            tabs[(i - 1 + tabs.length) % tabs.length].focus();
+                        if (e.key === "Enter" || e.key === " ") activate(t);
+                    });
+                });
+                // init
+                const first = tabs[0];
+                if (first) activate(first);
+            })();
+            // Smooth scroll with offset for sticky nav
+            (function () {
+                const nav = document.querySelector(".cute-nav");
+                const links = document.querySelectorAll('.cute-nav .nav-links a[href^="#"]');
+                const offset = () => (nav ? nav.getBoundingClientRect().height + 10 : 60);
+                links.forEach((a) => {
+                    a.addEventListener("click", (e) => {
+                        const id = a.getAttribute("href");
+                        if (!id || id === "#") return;
+                        const el = document.querySelector(id);
+                        if (!el) return;
+                        e.preventDefault();
+                        const top = el.getBoundingClientRect().top + window.scrollY - offset();
+                        window.scrollTo({ top, behavior: "smooth" });
+                    });
+                });
+            })();
+
+            // Active nav highlighting
+            (function () {
+                const sections = ["#hero", "#anniversary", "#reasons", "#gallery", "#cards"]
+                    .map((s) => document.querySelector(s))
+                    .filter(Boolean);
+                const links = Array.from(document.querySelectorAll(".cute-nav .nav-links a"));
+                function setActive(id) {
+                    links.forEach((l) =>
+                        l.classList.toggle("active", l.getAttribute("href") === id)
+                    );
+                }
+                function onScroll() {
+                    const y = window.scrollY + window.innerHeight * 0.25;
+                    let current = "#hero";
+                    sections.forEach((sec) => {
+                        if (sec.offsetTop <= y) current = "#" + sec.id;
+                    });
+                    setActive(current);
+                }
+                window.addEventListener("scroll", onScroll, { passive: true });
+                onScroll();
+            })();
+            // Back to top behavior
+            (function () {
+                const btn = document.getElementById("backToTop");
+                const toggle = () => {
+                    btn.style.display = window.scrollY > 200 ? "inline-block" : "none";
+                };
+                window.addEventListener("scroll", toggle, { passive: true });
+                toggle();
+                btn.addEventListener("click", () =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                );
+            })();
+
+            // Balloons toggle (fun animation)
+            (function () {
+                const container = document.querySelector(".hearts-container");
+                const toggle = document.getElementById("balloonsToggle");
+                if (!container || !toggle) return;
+                let on = false;
+                let timer;
+                function spawnBalloon() {
+                    const span = document.createElement("span");
+                    span.textContent = "🎈";
+                    span.style.position = "absolute";
+                    span.style.left = Math.random() * 100 + "vw";
+                    span.style.bottom = "-40px";
+                    span.style.fontSize = Math.random() * 1.2 + 1 + "rem";
+                    span.style.filter = "drop-shadow(0 6px 10px rgba(255, 105, 180, 0.35))";
+                    container.appendChild(span);
+                    const duration = 6000 + Math.random() * 4000;
+                    const xDrift = (Math.random() - 0.5) * 120;
+                    const start = performance.now();
+                    function animate(now) {
+                        const t = Math.min(1, (now - start) / duration);
+                        span.style.transform = `translate(${xDrift * t}px, ${
+                            -window.innerHeight * t
+                        }px)`;
+                        span.style.opacity = String(1 - t);
+                        if (t < 1) requestAnimationFrame(animate);
+                        else span.remove();
+                    }
+                    requestAnimationFrame(animate);
+                }
+                toggle.addEventListener("click", () => {
+                    on = !on;
+                    toggle.textContent = on ? "Balloons ✖" : "Balloons 🎈";
+                    if (on) timer = setInterval(spawnBalloon, 1000);
+                    else clearInterval(timer);
+                });
+            })();
+
+            // Anniversary countdown + next milestone
+            (function () {
+                const startDateStr = "2025-09-13"; // Anniversary
+                const start = new Date(startDateStr + "T00:00:00");
+                const daysEl = document.getElementById("daysToAnniv");
+                const milestoneEl = document.getElementById("nextMilestone");
+                if (!daysEl || !milestoneEl || isNaN(start.getTime())) return;
+                const today = new Date();
+                const currentYear = today.getFullYear();
+                const month = (start.getMonth() + 1).toString().padStart(2, "0");
+                const day = start.getDate().toString().padStart(2, "0");
+                const annivThisYear = new Date(`${currentYear}-${month}-${day}T00:00:00`);
+                const nextAnniv =
+                    annivThisYear >= new Date(today.toDateString())
+                        ? annivThisYear
+                        : new Date(`${currentYear + 1}-${month}-${day}T00:00:00`);
+                const diffDays = Math.ceil((nextAnniv - new Date()) / 86400000);
+                daysEl.textContent = String(Math.max(0, diffDays));
+                const years = nextAnniv.getFullYear() - start.getFullYear();
+                milestoneEl.textContent = years + (years === 1 ? " year" : " years");
+            })();
+
+            // Reasons carousel (auto-rotate + buttons)
+            (function () {
+                const list = document.getElementById("reasonsList");
+                const prev = document.getElementById("prevReason");
+                const next = document.getElementById("nextReason");
+                if (!list || !prev || !next) return;
+                let index = 0;
+                const items = Array.from(list.children);
+                function render() {
+                    items.forEach((li, i) => {
+                        li.style.display = i === index ? "list-item" : "none";
+                    });
+                }
+                function go(d) {
+                    index = (index + d + items.length) % items.length;
+                    render();
+                }
+                prev.addEventListener("click", () => go(-1));
+                next.addEventListener("click", () => go(1));
+                render();
+                setInterval(() => go(1), 4000);
+            })();
+            // Floating hearts
+            (function () {
+                const container = document.querySelector(".hearts-container");
+                const emojis = ["💖", "💕", "💘", "💝", "💗"];
+                function spawnHeart() {
+                    const span = document.createElement("span");
+                    span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    span.style.position = "absolute";
+                    span.style.left = Math.random() * 100 + "vw";
+                    span.style.bottom = "-30px";
+                    span.style.fontSize = Math.random() * 1.2 + 0.8 + "rem";
+                    span.style.opacity = "0.9";
+                    span.style.filter = "drop-shadow(0 4px 8px rgba(255, 105, 180, 0.4))";
+                    container.appendChild(span);
+                    const duration = 4000 + Math.random() * 3000;
+                    const xDrift = (Math.random() - 0.5) * 100;
+                    const start = performance.now();
+                    function animate(now) {
+                        const t = Math.min(1, (now - start) / duration);
+                        span.style.transform = `translate(${xDrift * t}px, ${
+                            -window.innerHeight * t
+                        }px)`;
+                        span.style.opacity = String(1 - t);
+                        if (t < 1) requestAnimationFrame(animate);
+                        else span.remove();
+                    }
+                    requestAnimationFrame(animate);
+                }
+                // spawn on interval and on click/tap
+                const interval = setInterval(spawnHeart, 1200);
+                window.addEventListener("pointerdown", spawnHeart);
+                // Optional: stop after some time if needed
+                // setTimeout(() => clearInterval(interval), 60000);
+            })();
+
+            // Days together counter - set your start date here (YYYY-MM-DD)
+            (function () {
+                const startDateStr = "2025-09-13"; // Special date
+                const start = new Date(startDateStr + "T00:00:00");
+                const el = document.getElementById("daysTogether");
+                if (!isNaN(start.getTime()) && el) {
+                    const update = () => {
+                        const today = new Date();
+                        const diffMs = today.setHours(0, 0, 0, 0) - start.setHours(0, 0, 0, 0);
+                        const days = Math.max(0, Math.floor(diffMs / 86400000));
+                        el.textContent = String(days);
+                    };
+                    update();
+                }
+            })();
+
+            // Surprise modal
+            (function () {
+                const openBtn = document.getElementById("openSurprise");
+                const closeBtn = document.getElementById("closeSurprise");
+                const backdrop = document.getElementById("surpriseBackdrop");
+                function open() {
+                    backdrop.style.display = "flex";
+                    // Confetti burst
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => {
+                            const conf = document.createElement("span");
+                            conf.textContent = ["✨", "💖", "🌸", "💫"][
+                                Math.floor(Math.random() * 4)
+                            ];
+                            conf.style.position = "fixed";
+                            conf.style.left = Math.random() * 100 + "vw";
+                            conf.style.top = "-20px";
+                            conf.style.fontSize = Math.random() * 1.2 + 0.8 + "rem";
+                            conf.style.filter = "drop-shadow(0 6px 10px rgba(255,105,180,.35))";
+                            document.body.appendChild(conf);
+                            const dur = 1500 + Math.random() * 1500;
+                            const start = performance.now();
+                            function anim(now) {
+                                const t = Math.min(1, (now - start) / dur);
+                                conf.style.transform = `translate(0, ${t * 120}vh)`;
+                                conf.style.opacity = String(1 - t);
+                                if (t < 1) requestAnimationFrame(anim);
+                                else conf.remove();
+                            }
+                            requestAnimationFrame(anim);
+                        }, i * 40);
+                    }
+                }
+                function close() {
+                    backdrop.style.display = "none";
+                }
+                if (openBtn) openBtn.addEventListener("click", open);
+                if (closeBtn) closeBtn.addEventListener("click", close);
+                backdrop?.addEventListener("click", (e) => {
+                    if (e.target === backdrop) close();
+                });
+                window.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") close();
+                });
+            })();
+
+            // Simple lightbox for gallery
+            (function () {
+                const lb = document.getElementById("lightbox");
+                const img = document.getElementById("lightboxImg");
+                const caption = document.getElementById("lightboxCaption");
+                const closeBtn = document.getElementById("closeLightbox");
+                const gallery = document.getElementById("gallery");
+                if (!lb || !img || !gallery) return;
+                gallery.addEventListener("click", (e) => {
+                    const target = e.target;
+                    if (target && target.tagName === "IMG") {
+                        img.src = target.src;
+                        if (caption) caption.textContent = target.alt || "";
+                        lb.style.display = "flex";
+                    }
+                });
+                function close() {
+                    lb.style.display = "none";
+                    img.src = "";
+                    if (caption) caption.textContent = "";
+                }
+                closeBtn?.addEventListener("click", close);
+                lb.addEventListener("click", (e) => {
+                    if (e.target === lb) close();
+                });
+                window.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") close();
+                });
+            })();
+        </script>
+    </body>
+</html>
