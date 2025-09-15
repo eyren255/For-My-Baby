@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💕 Cute & Lovely Theme 💕</title>
+    <meta name="title" content="Cute & Lovely Theme">
+    <meta name="description" content="A sweet, romantic HTML/CSS theme with soft pastels, adorable animations, and lovely UI components for someone special.">
+    <meta name="theme-color" content="#ffb3d1">
+    <meta name="author" content="For My Baby">
+    <meta name="keywords" content="cute, lovely, romantic, pastel, pink, hearts, theme, css, html">
+    <meta property="og:title" content="Cute & Lovely Theme">
+    <meta property="og:description" content="Adorable colors, hearts, sparkles, and a lovely vibe—made with love.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="favicon.svg">
+    <meta property="og:url" content="https://eyren255.github.io/For-My-Baby/">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="cute-lovely-theme.css">
     <style>
         body {
@@ -11,7 +25,7 @@
             padding: 20px;
             background: var(--gradient-dream);
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .container {
@@ -97,9 +111,28 @@
             text-align: center;
             margin: 30px 0;
         }
+
+        /* Back to top button */
+        #backToTop {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Floating hearts container */
+        .hearts-container {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 500;
+        }
     </style>
 </head>
 <body>
+    <div class="hearts-container" aria-hidden="true"></div>
     <div class="container">
         <!-- Header -->
         <div class="header">
@@ -225,6 +258,52 @@
             </div>
         </div>
     </div>
+    <button id="backToTop" class="cute-button" title="Back to top">⬆️ Top</button>
+
+    <script>
+        // Back to top behavior
+        (function() {
+            const btn = document.getElementById('backToTop');
+            const toggle = () => {
+                btn.style.display = window.scrollY > 200 ? 'inline-block' : 'none';
+            };
+            window.addEventListener('scroll', toggle, { passive: true });
+            toggle();
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        })();
+
+        // Floating hearts
+        (function() {
+            const container = document.querySelector('.hearts-container');
+            const emojis = ['💖','💕','💘','💝','💗'];
+            function spawnHeart() {
+                const span = document.createElement('span');
+                span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                span.style.position = 'absolute';
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.bottom = '-30px';
+                span.style.fontSize = (Math.random() * 1.2 + 0.8) + 'rem';
+                span.style.opacity = '0.9';
+                span.style.filter = 'drop-shadow(0 4px 8px rgba(255, 105, 180, 0.4))';
+                container.appendChild(span);
+                const duration = 4000 + Math.random() * 3000;
+                const xDrift = (Math.random() - 0.5) * 100;
+                const start = performance.now();
+                function animate(now) {
+                    const t = Math.min(1, (now - start) / duration);
+                    span.style.transform = `translate(${xDrift * t}px, ${-window.innerHeight * t}px)`;
+                    span.style.opacity = String(1 - t);
+                    if (t < 1) requestAnimationFrame(animate); else span.remove();
+                }
+                requestAnimationFrame(animate);
+            }
+            // spawn on interval and on click/tap
+            const interval = setInterval(spawnHeart, 1200);
+            window.addEventListener('pointerdown', spawnHeart);
+            // Optional: stop after some time if needed
+            // setTimeout(() => clearInterval(interval), 60000);
+        })();
+    </script>
 </body>
 </html>
 
